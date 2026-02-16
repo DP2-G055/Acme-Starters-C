@@ -2,6 +2,7 @@
 package acme.entities.invention;
 
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +12,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Moment;
+import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
@@ -24,9 +29,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Invention {
+public class Invention extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
+
+	@Transient
+	@Autowired
+	private InventionRepository	repository;
 
 	@Mandatory
 	@Valid
@@ -71,9 +80,18 @@ public class Invention {
 
 	@Valid
 	@Transient
-	private Double monthsActive() {
+	private Long monthsActive() {
 		Duration duracion = MomentHelper.computeDuration(this.startMoment, this.endMoment);
-		return duracion.toDaysPart() / 30.;
+		return duracion.get(ChronoUnit.MONTHS);
 	}
 
+	@Valid
+	@Transient
+	private Money cost() {
+		Double sum = this.repository.findMoneyByInventionId(this.getId());
+		Money res = new Money();
+		res.setAmount(sum > 0 ? sum : 0);
+		res.setCurrency("EUR");
+		return res;
+	}
 }

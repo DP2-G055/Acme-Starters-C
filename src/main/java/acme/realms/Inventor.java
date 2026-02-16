@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.Valid;
 
+import acme.client.components.basis.AbstractEntity;
 import acme.client.components.validation.Mandatory;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Inventor {
+public class Inventor extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
 
