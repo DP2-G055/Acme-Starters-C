@@ -1,5 +1,5 @@
 
-package acme.features.any.invention;
+package acme.features.any.part;
 
 import javax.annotation.PostConstruct;
 
@@ -8,16 +8,15 @@ import org.springframework.stereotype.Controller;
 
 import acme.client.components.principals.Any;
 import acme.client.controllers.AbstractController;
-import acme.entities.invention.Invention;
+import acme.entities.part.Part;
 
 @Controller
-public class AnyInventionController extends AbstractController<Any, Invention> {
+public class AnyPartController extends AbstractController<Any, Part> {
 
 	@PostConstruct
 	protected void initialise() {
 		super.setMediaType(MediaType.TEXT_HTML);
 
-		super.addBasicCommand("list", AnyInventionListService.class);
-		super.addBasicCommand("show", AnyInventionShowService.class);
+		super.addBasicCommand("list", AnyPartListService.class);
 	}
 }
