@@ -15,4 +15,7 @@ public interface AnyPartRepository extends AbstractRepository {
 	@Query("select p from Part p where p.invention.id = :inventionId")
 	public List<Part> findAllPartsByInventionId(int inventionId);
 
+	@Query("select p from Part p where p.id = :partId")
+	public Part findPartById(int partId);
+
 }
