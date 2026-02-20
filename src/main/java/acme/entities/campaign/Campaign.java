@@ -75,7 +75,7 @@ public class Campaign extends AbstractEntity {
 		return duracion.get(ChronoUnit.MONTHS);
 	}
 
-	@ValidNumber(positive)
+	@ValidNumber(positive=true)
 	@Transient
 	private Double effort() {
 		return sumEffortByCampaignId(this.getId());
