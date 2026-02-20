@@ -31,5 +31,6 @@ public class AnyInventionShowService extends AbstractService<Any, Invention> {
 	@Override
 	public void unbind() {
 		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
+		super.unbindGlobal("inventorId", this.invention.getInventor().getId());
 	}
 }

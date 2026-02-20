@@ -11,7 +11,6 @@
 	<acme:form-textbox code="any.invention.form.endMoment" path="endMoment"/>
 	<acme:form-textbox code="any.invention.form.moreInfo" path="moreInfo"/>
 	
-	<jstl:if test="${_command == 'show'}">
-		<acme:button code="any.invention.form.button.parts" action="/any/part/list?inventionId=${id}" />
-	</jstl:if>
+	<acme:button code="any.invention.form.button.parts" action="/any/part/list?inventionId=${id}" />
+	<acme:button code="any.invention.form.button.inventor" action="/any/inventor/show?id=${inventorId}" />
 </acme:form>
