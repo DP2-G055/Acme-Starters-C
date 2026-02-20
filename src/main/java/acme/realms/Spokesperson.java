@@ -3,7 +3,6 @@ package acme.realms;
 import javax.persistence.Column;
 import javax.validation.Valid;
 import javax.persistence.Entity;
-
 import lombok.Getter;
 import lombok.Setter;
 
