@@ -1,0 +1,5 @@
+key,ticker,name,description,startMoment,endMoment,moreInfo,draftMode,key:inventor
+invention-01,"INV-001-A","Robot Limpiador","Robot autónomo que limpia ventanas de rascacielos.","2028/01/01 09:00","2028/06/01 18:00","http://acme.com/robot",false,inventor-01
+invention-02,"INV-002-B","Traductor Mental","Casco que traduce pensamientos a texto en pantalla.","2029/03/15 10:00","2029/09/15 10:00","http://acme.com/mind",true,inventor-02
+invention-03,"INV-003-C","Motor de Agua","Motor de combustión interna modificado para usar H2O.","2028/12/01 08:00","2030/01/01 00:00","",false,inventor-01
+invention-04,"INV-004-D","Zapatos Voladores","Calzado con propulsores iónicos de baja potencia.","2030/05/20 14:30","2030/05/25 16:30","http://fly.shoes",true,inventor-03

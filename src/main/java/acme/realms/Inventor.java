@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.validation.Mandatory;
+import acme.constraints.ValidText;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,12 +19,12 @@ public class Inventor extends AbstractEntity {
 	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
-	//Falta agregar validtext
+	@ValidText
 	@Column
 	private String				bio;
 
 	@Mandatory
-	//Falta agregar validtext
+	@ValidText
 	@Column
 	private String				keyWords;
 

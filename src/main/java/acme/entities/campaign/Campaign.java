@@ -12,15 +12,15 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Moment;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
-import acme.client.components.validation.ValidNumber;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.MomentHelper;
-import acme.entities.milestone.Milestone;
 import acme.realms.Spokesperson;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +31,10 @@ import lombok.Setter;
 public class Campaign extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
+
+	@Transient
+	@Autowired
+	private CampaignRepository	repository;
 
 	@Mandatory
 	@Valid
@@ -75,11 +79,11 @@ public class Campaign extends AbstractEntity {
 		return duracion.get(ChronoUnit.MONTHS);
 	}
 
-	@ValidNumber(positive=true)
 	@Transient
 	private Double effort() {
-		return sumEffortByCampaignId(this.getId());
+		return this.repository.sumEffortByCampaignId(this.getId());
 	};
+
 
 	@Mandatory
 	@Valid

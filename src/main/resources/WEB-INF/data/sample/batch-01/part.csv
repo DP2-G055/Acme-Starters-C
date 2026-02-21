@@ -1,0 +1,9 @@
+key,name,description,cost.amount,cost.currency,kind,key:invention
+part-01,"Sensor Lidar","Sensor láser para detección de obstáculos a 360 grados.","150.00","EUR","CORE",invention-01
+part-02,"Batería de Litio","Batería recargable de alta capacidad (5000mAh).","85.50","EUR","MANDATORY",invention-01
+part-03,"Casco EEG","Estructura receptora de ondas cerebrales no invasiva.","300.00","EUR","OPTIONAL",invention-02
+part-04,"Algoritmo de Decodificación","Software pre-cargado para interpretación de sinapsis.","1200.00","EUR","CORE",invention-02
+part-05,"Célula de Combustible","Unidad de conversión de hidrógeno a energía eléctrica.","450.00","EUR","MANDATORY",invention-03
+part-06,"Tanque de Agua Reforzado","Depósito de alta presión para almacenamiento de H2O.","120.00","EUR","OPTIONAL",invention-03
+part-07,"Mini Propulsor Iónico","Motor de empuje silencioso de bajo voltaje.","900.00","EUR","OPTIONAL",invention-04
+part-08,"Kit de Calibración","Herramientas para ajustar la estabilidad del vuelo.","45.00","EUR","MANDATORY",invention-04
