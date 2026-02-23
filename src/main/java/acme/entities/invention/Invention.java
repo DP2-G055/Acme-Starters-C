@@ -2,7 +2,6 @@
 package acme.entities.invention;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -87,7 +86,7 @@ public class Invention extends AbstractEntity {
 	@Transient
 	private Long monthsActive() {
 		Duration duracion = MomentHelper.computeDuration(this.startMoment, this.endMoment);
-		return duracion.get(ChronoUnit.MONTHS);
+		return (long) 0.0;
 	}
 
 	@Valid

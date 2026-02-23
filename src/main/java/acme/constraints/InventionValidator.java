@@ -1,38 +1,64 @@
 
 package acme.constraints;
 
-import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import acme.client.components.validation.AbstractValidator;
+import acme.client.components.validation.Validator;
 import acme.client.helpers.MomentHelper;
 import acme.entities.invention.Invention;
 import acme.entities.invention.InventionRepository;
 
-public class InventionValidator implements ConstraintValidator<ValidInvention, Invention> {
+@Validator
+public class InventionValidator extends AbstractValidator<ValidInvention, Invention> {
 
 	@Autowired
 	private InventionRepository repository;
 
 
 	@Override
+	protected void initialise(final ValidInvention annotation) {
+		assert annotation != null;
+	}
+
+	@Override
 	public boolean isValid(final Invention invention, final ConstraintValidatorContext context) {
+
+		assert context != null;
+
+		boolean result;
+
 		if (invention == null)
-			return true;
-		boolean isValid = true;
+			result = true;
+		else {
+			{
+				boolean uniqueInvention;
+				Invention existingInvention;
 
-		if (invention.getEndMoment() != null && invention.getStartMoment() != null && MomentHelper.isAfter(invention.getStartMoment(), invention.getEndMoment()))
-			isValid = false;
+				existingInvention = this.repository.findInventionByTicker(invention.getTicker());
+				uniqueInvention = existingInvention == null || existingInvention.equals(invention);
 
-		if (invention.getDraftMode() != null && !invention.getDraftMode())
-			if (invention.getId() != 0) {
-				int partsCount = this.repository.countPartsByInventionId(invention.getId());
-				if (partsCount < 1)
-					isValid = false;
-			} else
-				isValid = false;
-		return isValid;
+				super.state(context, uniqueInvention, "ticker", "acme.validation.invention.duplicated-ticker.message");
+			}
+			{
+				boolean hasParts;
+				int numParts = this.repository.countPartsByInventionId(invention.getId());
 
+				hasParts = invention.getDraftMode() || numParts == 0;
+
+				super.state(context, hasParts, "*", "acme.validation.invention.parts.message");
+			}
+			{
+				boolean isValidInterval;
+
+				isValidInterval = MomentHelper.isAfter(invention.getEndMoment(), invention.getStartMoment());
+
+				super.state(context, isValidInterval, "endMoment", "acme.validation.invention.valid-interval.message");
+			}
+			result = !super.hasErrors(context);
+		}
+		return result;
 	}
 }
