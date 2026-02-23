@@ -2,7 +2,6 @@
 package acme.entities.campaign;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +20,9 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.MomentHelper;
+import acme.constraints.ValidHeader;
+import acme.constraints.ValidText;
+import acme.constraints.ValidTicker;
 import acme.realms.Spokesperson;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,17 +44,17 @@ public class Campaign extends AbstractEntity {
 	private Spokesperson		spokesperson;
 
 	@Mandatory
-	// @ValidTicker
+	@ValidTicker
 	@Column(unique = true)
 	private String				ticker;
 
 	@Mandatory
-	// @ValidHeader
+	@ValidHeader
 	@Column
 	private String				name;
 
 	@Mandatory
-	// @ValidText
+	@ValidText
 	@Column
 	private String				description;
 
@@ -74,15 +76,19 @@ public class Campaign extends AbstractEntity {
 
 	@Valid
 	@Transient
-	private Long monthsActive() {
+	private Double monthsActive() {
 		Duration duracion = MomentHelper.computeDuration(this.startMoment, this.endMoment);
-		return duracion.get(ChronoUnit.MONTHS);
+		return (double) 0.0;
 	}
 
+	//corregir esfuerzo a 0 si no hay milestone en vez de null
 	@Transient
 	private Double effort() {
-		return this.repository.sumEffortByCampaignId(this.getId());
-	};
+		if (this.repository.getMilestonesByCampaignId(this.getId()).isEmpty())
+			return 0.0;
+		else
+			return this.repository.sumEffortByCampaignId(this.getId());
+	}
 
 
 	@Mandatory
