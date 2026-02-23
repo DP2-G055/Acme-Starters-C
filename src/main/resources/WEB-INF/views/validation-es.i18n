@@ -4,3 +4,5 @@ acme.validation.job.ticker.message			   = 2 letras mayúsculas, 2 números, un g
 acme.validation.invention.duplicated-ticker.message = Referencia de invento ya usada
 acme.validation.invention.parts.message = El invento debe tener alguna parte para poder ser publicado
 acme.validation.invention.valid-interval.message = La fecha de fin debe ser posterior a la de comienzo
+acme.validation.invention.valid-start-moment.message = La fecha de comienzo debe ser posterior a la fecha base
+acme.validation.invention.valid-end-moment.message = La fecha de fin debe ser posterior a la fecha base

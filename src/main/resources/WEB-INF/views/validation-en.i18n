@@ -4,3 +4,5 @@ acme.validation.job.ticker.message			  = The ticker must have 2 capital letters,
 acme.validation.invention.duplicated-ticker.message = The invention ticker is duplicated
 acme.validation.invention.parts.message = The inventions needs to have parts in order to be published
 acme.validation.invention.valid-interval.message = End Moment must be after Start Moment
+acme.validation.invention.valid-start-moment.message = Start moment must be after base moment
+acme.validation.invention.valid-end-moment.message = End moment must be after base moment
