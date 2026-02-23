@@ -27,13 +27,13 @@ import javax.validation.constraints.Pattern;
 @Constraint(validatedBy = {})
 @ReportAsSingleViolation
 
-@Pattern(regexp = "^[A-Z]{2}[0-9]{2}-\\\\w{5,10}$")
+@Pattern(regexp = "^[A-Z]{2}[0-9]{2}-\\w{5,10}$")
 
 public @interface ValidTicker {
 
 	// Standard validation properties -----------------------------------------
 
-	String message() default "{acme.validation.job.ticker.message}";
+	String message() default "{acme.validation.sponsorship.ticker.message}";
 
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};

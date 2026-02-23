@@ -2,5 +2,7 @@
 
 acme.validation.header.message  	= Must have from 1 to 75 characters
 acme.validation.text.message   		= Must have from 1 to 255 characters
-acme.validation.job.ticker.message			  = The ticker must have 2 capital letters, 2 numbers, a hyphen, and between 5 and 10 alphanumeric characters (letters, numbers, or underscores)
-
+acme.validation.sponsorship.ticker.message			  = The ticker must have 2 capital letters, 2 numbers, a hyphen, and between 5 and 10 alphanumeric characters (letters, numbers, or underscores)
+acme.validation.sponsorship.duplicated-ticker.message = The ticker is duplicated
+acme.validation.sponsorship.donations.message = The sponsorship needs to have donations in order to be published
+acme.validation.sponsorship.valid-interval.message = End Moment must be after Start Moment

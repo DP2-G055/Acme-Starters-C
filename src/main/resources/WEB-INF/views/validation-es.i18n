@@ -1,3 +1,6 @@
 acme.validation.header.message  	= Debe tener entre 1 y 75 caracteres
 acme.validation.text.message   		= Debe tener entre 1 y 255 caracteres 
-acme.validation.job.ticker.message			   = 2 letras mayúsculas, 2 números, un guion y entre 5 y 10 caracteres alfanuméricos (letras, números o guion bajo)
+acme.validation.sponsorship.ticker.message			   = 2 letras mayúsculas, 2 números, un guion y entre 5 y 10 caracteres alfanuméricos (letras, números o guion bajo)
+acme.validation.sponsorship.duplicated-ticker.message = Referencia ya usada
+acme.validation.sponsorship.donations.message = El sponsorship debe tener alguna donación para poder ser publicado
+acme.validation.sponsorship.valid-interval.message = La fecha de fin debe ser posterior a la de comienzo
