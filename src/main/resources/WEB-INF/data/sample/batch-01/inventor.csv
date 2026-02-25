@@ -1,4 +1,4 @@
-key,bio,keyWords,licensed
-inventor-01,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
-inventor-02,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
-inventor-03,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",false
+key,key:userAccount,bio,keyWords,licensed
+inventor-01,user-account-inventor-01,"Ingeniero mecánico experto en robótica y automatización.","robotics,mechanics,automation",true
+inventor-02,user-account-inventor-02,"Desarrolladora de software especializada en IA.","software,ai,java",true
+inventor-03,user-account-inventor-03,"Estudiante de física con ideas locas.","physics,theoretical,space",false

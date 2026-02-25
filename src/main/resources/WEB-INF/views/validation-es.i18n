@@ -6,3 +6,7 @@ acme.validation.invention.parts.message = El invento debe tener alguna parte par
 acme.validation.invention.valid-interval.message = La fecha de fin debe ser posterior a la de comienzo
 acme.validation.invention.valid-start-moment.message = La fecha de comienzo debe ser posterior a la fecha base
 acme.validation.invention.valid-end-moment.message = La fecha de fin debe ser posterior a la fecha base
+
+acme.validation.campaign.duplicated-ticker.message  = Referencia ya usada
+acme.validation.campaign.no-milestones.message = Esta campaña no tiene ningún milestone
+acme.validation.campaign.invalid-interval.message = El momento de inicio debe ser anterior al momento de fin

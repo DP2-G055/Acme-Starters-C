@@ -10,7 +10,7 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.provider;
+package acme.features.authenticated.inventor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ import org.springframework.stereotype.Service;
 import acme.client.components.principals.Authenticated;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
-import acme.realms.Provider;
+import acme.realms.Inventor;
 
 @Service
-public class AuthenticatedProviderUpdateService extends AbstractService<Authenticated, Provider> {
+public class AuthenticatedInventorUpdateService extends AbstractService<Authenticated, Inventor> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AuthenticatedProviderRepository	repository;
+	private AuthenticatedInventorRepository	repository;
 
-	private Provider						provider;
+	private Inventor						inventor;
 
 	// AbstractService interface ----------------------------------------------ç
 
@@ -38,35 +38,35 @@ public class AuthenticatedProviderUpdateService extends AbstractService<Authenti
 		int userAccountId;
 
 		userAccountId = super.getRequest().getPrincipal().getAccountId();
-		this.provider = this.repository.findProviderByUserAccountId(userAccountId);
+		this.inventor = this.repository.findInventorByUserAccountId(userAccountId);
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
 
-		status = super.getRequest().getPrincipal().hasRealmOfType(Provider.class);
+		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
 		super.setAuthorised(status);
 	}
 
 	@Override
 	public void bind() {
-		super.bindObject(this.provider, "company", "sector");
+		super.bindObject(this.inventor, "bio", "keyWords", "licensed");
 	}
 
 	@Override
 	public void validate() {
-		super.validateObject(this.provider);
+		super.validateObject(this.inventor);
 	}
 
 	@Override
 	public void execute() {
-		this.repository.save(this.provider);
+		this.repository.save(this.inventor);
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.provider, "company", "sector");
+		super.unbindObject(this.inventor, "bio", "keyWords", "licensed");
 	}
 
 	@Override

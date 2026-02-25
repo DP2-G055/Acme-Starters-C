@@ -6,3 +6,7 @@ acme.validation.invention.parts.message = The inventions needs to have parts in 
 acme.validation.invention.valid-interval.message = End Moment must be after Start Moment
 acme.validation.invention.valid-start-moment.message = Start moment must be after base moment
 acme.validation.invention.valid-end-moment.message = End moment must be after base moment
+
+acme.validation.campaign.duplicated-ticker.message  = The ticker is duplicated
+acme.validation.campaign.no-milestones.message = This campaign does not have any milestone
+acme.validation.campaign.invalid-interval.message = Start momment must be previous to end momento
