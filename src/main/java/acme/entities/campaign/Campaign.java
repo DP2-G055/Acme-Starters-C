@@ -2,7 +2,6 @@
 package acme.entities.campaign;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,6 +20,7 @@ import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.MomentHelper;
+import acme.constraints.ValidCampaign;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidText;
 import acme.constraints.ValidTicker;
@@ -31,6 +31,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidCampaign
 public class Campaign extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
