@@ -4,3 +4,6 @@ acme.validation.header.message  	= Must have from 1 to 75 characters
 acme.validation.text.message   		= Must have from 1 to 255 characters
 acme.validation.job.ticker.message			  = The ticker must have 2 capital letters, 2 numbers, a hyphen, and between 5 and 10 alphanumeric characters (letters, numbers, or underscores)
 
+acme.validation.campaign.duplicated-ticker.message  = The ticker is duplicated
+acme.validation.campaign.no-milestones.message = This campaign does not have any milestone
+acme.validation.campaign.invalid-interval.message = Start momment must be previous to end momento
