@@ -1,0 +1,13 @@
+inventor.invention.list.title = Published inventions
+inventor.invention.list.name = Name
+inventor.invention.list.description = Description
+inventor.invention.form.ticker = Ticker
+inventor.invention.form.name = Name
+inventor.invention.form.description = Description
+inventor.invention.form.startMoment = Start moment
+inventor.invention.form.endMoment = End moment
+inventor.invention.form.moreInfo = More info
+inventor.invention.form.button.parts = Parts
+inventor.invention.form.button.inventor = Inventor
+inventor.invention.form.button.edit = Update
+inventor.invention.form.button.publish = Publish
