@@ -4,6 +4,7 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:list show="show">
+	<acme:list-column code="any.invention.list.ticker" path="ticker" width="20%"/>
 	<acme:list-column code="any.invention.list.name" path="name" width="20%"/>
-	<acme:list-column code="any.invention.list.description" path="description" width="80%"/>
+	<acme:list-column code="any.invention.list.description" path="description" width="60%"/>
 </acme:list>
