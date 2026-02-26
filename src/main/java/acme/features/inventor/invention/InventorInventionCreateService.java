@@ -10,63 +10,64 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.consumer;
+package acme.features.inventor.invention;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.client.components.principals.Authenticated;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
-import acme.realms.Consumer;
+import acme.entities.invention.Invention;
+import acme.realms.Inventor;
 
 @Service
-public class AuthenticatedConsumerUpdateService extends AbstractService<Authenticated, Consumer> {
+public class InventorInventionCreateService extends AbstractService<Inventor, Invention> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AuthenticatedConsumerRepository	repository;
+	private InventorInventionRepository	repository;
 
-	private Consumer						consumer;
+	private Invention					invention;
 
 	// AbstractService interface ----------------------------------------------ç
 
 
 	@Override
 	public void load() {
-		int userAccountId;
+		Inventor inventor;
 
-		userAccountId = super.getRequest().getPrincipal().getAccountId();
-		this.consumer = this.repository.findConsumerByUserAccountId(userAccountId);
+		inventor = (Inventor) super.getRequest().getPrincipal().getActiveRealm();
+		this.invention = new Invention();
+		this.invention.setInventor(inventor);
+		this.invention.setDraftMode(true);
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-
-		status = super.getRequest().getPrincipal().hasRealmOfType(Consumer.class);
+		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
 		super.setAuthorised(status);
 	}
 
 	@Override
 	public void bind() {
-		super.bindObject(this.consumer, "company", "sector");
+		super.bindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
 	}
 
 	@Override
 	public void validate() {
-		super.validateObject(this.consumer);
+		super.validateObject(this.invention);
 	}
 
 	@Override
 	public void execute() {
-		this.repository.save(this.consumer);
+		this.repository.save(this.invention);
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.consumer, "company", "sector");
+		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
 	}
 
 	@Override
