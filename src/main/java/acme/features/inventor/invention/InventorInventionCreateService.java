@@ -21,7 +21,7 @@ import acme.entities.invention.Invention;
 import acme.realms.Inventor;
 
 @Service
-public class InventorInventionUpdateService extends AbstractService<Inventor, Invention> {
+public class InventorInventionCreateService extends AbstractService<Inventor, Invention> {
 
 	// Internal state ---------------------------------------------------------
 
@@ -35,19 +35,18 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.invention = this.repository.findInventionById(id);
+		Inventor inventor;
+
+		inventor = (Inventor) super.getRequest().getPrincipal().getActiveRealm();
+		this.invention = new Invention();
+		this.invention.setInventor(inventor);
+		this.invention.setDraftMode(true);
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
 		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-
-		if (status)
-			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		status = status && this.invention.getDraftMode();
-
 		super.setAuthorised(status);
 	}
 

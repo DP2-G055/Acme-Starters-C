@@ -1,14 +1,3 @@
-/*
- * InventorInventionUpdateService.java
- *
- * Copyright (C) 2012-2026 Rafael Corchuelo.
- *
- * In keeping with the traditional purpose of furthering education and research, it is
- * the policy of the copyright owner to permit non-commercial use and redistribution of
- * this software. It has been tested carefully, but it is not guaranteed for any particular
- * purposes. The copyright owner does not offer any warranties or representations, nor do
- * they accept any liabilities with respect to them.
- */
 
 package acme.features.inventor.invention;
 
@@ -21,16 +10,12 @@ import acme.entities.invention.Invention;
 import acme.realms.Inventor;
 
 @Service
-public class InventorInventionUpdateService extends AbstractService<Inventor, Invention> {
-
-	// Internal state ---------------------------------------------------------
+public class InventorInventionPublishService extends AbstractService<Inventor, Invention> {
 
 	@Autowired
 	private InventorInventionRepository	repository;
 
 	private Invention					invention;
-
-	// AbstractService interface ----------------------------------------------ç
 
 
 	@Override
@@ -43,11 +28,9 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 	public void authorise() {
 		boolean status;
 		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-
 		if (status)
 			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
 		status = status && this.invention.getDraftMode();
-
 		super.setAuthorised(status);
 	}
 
@@ -59,10 +42,18 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 	@Override
 	public void validate() {
 		super.validateObject(this.invention);
+
+		if (!super.getResponse().getErrors().hasErrors("ticker")) {
+			int partsCount = this.repository.countPartsByInventionId(this.invention.getId());
+			boolean hasParts = partsCount > 0;
+			super.getResponse().getErrors().state(super.getRequest(), hasParts, "ticker", "inventor.invention.form.error.no-parts");
+		}
+
 	}
 
 	@Override
 	public void execute() {
+		this.invention.setDraftMode(false);
 		this.repository.save(this.invention);
 	}
 
@@ -76,5 +67,4 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 		if (super.getRequest().getMethod().equals("POST"))
 			PrincipalHelper.handleUpdate();
 	}
-
 }
