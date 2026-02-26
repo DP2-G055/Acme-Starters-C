@@ -8,3 +8,4 @@
 	<acme:list-column code="inventor.part.list.cost" path="cost" width="20%"/>
 	<acme:list-column code="inventor.part.list.description" path="description" width="60%"/>
 </acme:list>
+<acme:button code="inventor.part.list.button.create" action="/inventor/part/create?inventionId=${id}"/>

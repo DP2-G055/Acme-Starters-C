@@ -10,63 +10,74 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.authenticated.consumer;
+package acme.features.inventor.part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.client.components.principals.Authenticated;
+import acme.client.components.views.SelectChoices;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
-import acme.realms.Consumer;
+import acme.entities.invention.Invention;
+import acme.entities.part.Part;
+import acme.entities.part.PartKind;
+import acme.realms.Inventor;
 
 @Service
-public class AuthenticatedConsumerUpdateService extends AbstractService<Authenticated, Consumer> {
+public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	private AuthenticatedConsumerRepository	repository;
+	private InventorPartRepository	repository;
 
-	private Consumer						consumer;
+	private Part					part;
 
 	// AbstractService interface ----------------------------------------------ç
 
 
 	@Override
 	public void load() {
-		int userAccountId;
+		Invention invention;
+		int id;
 
-		userAccountId = super.getRequest().getPrincipal().getAccountId();
-		this.consumer = this.repository.findConsumerByUserAccountId(userAccountId);
+		id = super.getRequest().getData("inventionId", int.class);
+		invention = this.repository.findInventionById(id);
+		this.part = new Part();
+		this.part.setInvention(invention);
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-
-		status = super.getRequest().getPrincipal().hasRealmOfType(Consumer.class);
+		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
+		if (status)
+			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
 		super.setAuthorised(status);
 	}
 
 	@Override
 	public void bind() {
-		super.bindObject(this.consumer, "company", "sector");
+		super.bindObject(this.part, "name", "description", "cost", "kind");
 	}
 
 	@Override
 	public void validate() {
-		super.validateObject(this.consumer);
+		super.validateObject(this.part);
 	}
 
 	@Override
 	public void execute() {
-		this.repository.save(this.consumer);
+		this.repository.save(this.part);
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.consumer, "company", "sector");
+		SelectChoices kindChoices = SelectChoices.from(PartKind.class, this.part.getKind());
+		super.unbindObject(this.part, "name", "description", "cost", "kind");
+		super.unbindGlobal("draftMode", this.part.getInvention().getDraftMode());
+		super.unbindGlobal("inventionId", this.part.getInvention().getId());
+		super.unbindGlobal("kindOptions", kindChoices);
 	}
 
 	@Override

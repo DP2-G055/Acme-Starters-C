@@ -8,6 +8,7 @@ inventor.invention.form.startMoment = Start moment
 inventor.invention.form.endMoment = End moment
 inventor.invention.form.moreInfo = More info
 inventor.invention.form.button.parts = Parts
+inventor.invention.form.button.create = Create
 
 inventor.invention.form.title = Invention
 inventor.part.list.title = Part list 
@@ -16,6 +17,7 @@ inventor.part.form.title = Part
 inventor.part.list.name = Name
 inventor.part.list.cost = Cost
 inventor.part.list.description = Description
+inventor.part.list.button.create = Create
 
 inventor.part.form.name = Name
 inventor.part.form.description = Description
