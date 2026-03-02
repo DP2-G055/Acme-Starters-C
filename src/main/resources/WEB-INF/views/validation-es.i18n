@@ -5,3 +5,13 @@ acme.validation.sponsorship.duplicated-ticker.message = Referencia ya usada
 acme.validation.sponsorship.donations.message = El sponsorship debe tener alguna donación para poder ser publicado
 acme.validation.sponsorship.valid-interval.message = La fecha de fin debe ser posterior a la de comienzo
 acme.validation.donation.currency.message = Debe estar en Euros
+acme.validation.job.ticker.message			   = 2 letras mayúsculas, 2 números, un guion y entre 5 y 10 caracteres alfanuméricos (letras, números o guion bajo)
+acme.validation.invention.duplicated-ticker.message = Referencia de invento ya usada
+acme.validation.invention.parts.message = El invento debe tener alguna parte para poder ser publicado
+acme.validation.invention.valid-interval.message = La fecha de fin debe ser posterior a la de comienzo
+acme.validation.invention.valid-start-moment.message = La fecha de comienzo debe ser posterior a la fecha base
+acme.validation.invention.valid-end-moment.message = La fecha de fin debe ser posterior a la fecha base
+
+acme.validation.campaign.duplicated-ticker.message  = Referencia ya usada
+acme.validation.campaign.no-milestones.message = Esta campaña no tiene ningún milestone
+acme.validation.campaign.invalid-interval.message = El momento de inicio debe ser anterior al momento de fin

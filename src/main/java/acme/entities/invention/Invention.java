@@ -2,6 +2,7 @@
 package acme.entities.invention;
 
 import java.time.Duration;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +12,19 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 
-import acme.client.components.datatypes.Moment;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import acme.client.components.basis.AbstractEntity;
+import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidUrl;
 import acme.client.helpers.MomentHelper;
+import acme.constraints.ValidHeader;
+import acme.constraints.ValidInvention;
+import acme.constraints.ValidText;
+import acme.constraints.ValidTicker;
 import acme.realms.Inventor;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,9 +32,14 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Invention {
+@ValidInvention
+public class Invention extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
+
+	@Transient
+	@Autowired
+	private InventionRepository	repository;
 
 	@Mandatory
 	@Valid
@@ -34,29 +47,29 @@ public class Invention {
 	private Inventor			inventor;
 
 	@Mandatory
-	// @validticker
+	@ValidTicker
 	@Column(unique = true)
 	private String				ticker;
 
 	@Mandatory
-	// validheader
+	@ValidHeader
 	@Column
 	private String				name;
 
 	@Mandatory
-	// validtext
+	@ValidText
 	@Column
 	private String				description;
 
 	@Mandatory
-	@ValidMoment(constraint = ValidMoment.Constraint.ENFORCE_FUTURE)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Moment				startMoment;
+	private Date				startMoment;
 
 	@Mandatory
-	@ValidMoment(constraint = ValidMoment.Constraint.ENFORCE_FUTURE)
+	@ValidMoment
 	@Temporal(TemporalType.TIMESTAMP)
-	private Moment				endMoment;
+	private Date				endMoment;
 
 	@Optional
 	@ValidUrl
@@ -73,7 +86,16 @@ public class Invention {
 	@Transient
 	private Double monthsActive() {
 		Duration duracion = MomentHelper.computeDuration(this.startMoment, this.endMoment);
-		return duracion.toDaysPart() / 30.;
+		return (double) 0.0;
 	}
 
+	@Valid
+	@Transient
+	private Money cost() {
+		Double sum = this.repository.findMoneyByInventionId(this.getId());
+		Money res = new Money();
+		res.setAmount(sum > 0 ? sum : 0);
+		res.setCurrency("EUR");
+		return res;
+	}
 }

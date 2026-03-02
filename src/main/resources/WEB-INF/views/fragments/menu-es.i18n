@@ -13,6 +13,11 @@
 master.menu.anonymous = Anónimo
 master.menu.anonymous.favourite-link = Enlace favorito
 
+# master.menu.any #######################################################
+
+master.menu.any = Cualquier usuario
+master.menu.any.inventions = Listar inventos publicados
+
 # master.menu.administrator ###################################################
 
 master.menu.administrator = Administrador
@@ -30,6 +35,11 @@ master.menu.provider.favourite-link = Enlace favorito
 
 master.menu.consumer = Consumidor
 master.menu.consumer.favourite-link = Enlace favorito
+
+# master.menu.inventor ##########################################################
+
+master.menu.inventor = Inventor
+master.menu.inventor.invention.list = Listar inventos 
 
 # master.menu.user-account ####################################################
 

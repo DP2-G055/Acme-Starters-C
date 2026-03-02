@@ -10,3 +10,6 @@ user-account-administrator-02,true,"UserIdentity{name: 'Administrator2', surname
 user-account-sponsor-01,true,"UserIdentity{name: 'Paul', surname: 'Moore', email: 'paul@acme.com'}",sponsor1,sponsor1
 user-account-sponsor-02,true,"UserIdentity{name: 'John', surname: 'Smith', email: 'john@acme.com'}",sponsor2,sponsor2
 user-account-sponsor-03,true,"UserIdentity{name: 'Adrian', surname: 'Lopez', email: 'adrian@acme.com'}",sponsor3,sponsor3
+user-account-inventor-01,true,"UserIdentity{name: 'Inventor1',surname: 'Acme', email: 'inventor1@acme.com'}",inventor1,inventor1
+user-account-inventor-02,true,"UserIdentity{name: 'Inventor2', surname: 'Acme', email: 'inventor2@acme.com'}",inventor2,inventor2
+user-account-inventor-03,true,"UserIdentity{name: 'Inventor3', surname: 'Acme', email: 'inventor3@acme.com'}",inventor3,inventor3
