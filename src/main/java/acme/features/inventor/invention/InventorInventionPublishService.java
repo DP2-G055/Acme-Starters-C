@@ -48,6 +48,9 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 			boolean hasParts = partsCount > 0;
 			super.getResponse().getErrors().state(super.getRequest(), hasParts, "ticker", "inventor.invention.form.error.no-parts");
 		}
+		{
+			// añadir que si la fecha es inferior a la actual enseñar mensaje de error
+		}
 
 	}
 

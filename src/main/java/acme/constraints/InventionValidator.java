@@ -1,8 +1,6 @@
 
 package acme.constraints;
 
-import java.util.Date;
-
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,18 +49,6 @@ public class InventionValidator extends AbstractValidator<ValidInvention, Invent
 				hasParts = invention.getDraftMode() || numParts > 0;
 
 				super.state(context, hasParts, "*", "acme.validation.invention.parts.message");
-			}
-			{
-				boolean isValidStartMoment;
-				boolean isValidEndMoment;
-
-				Date now = MomentHelper.getBaseMoment();
-
-				isValidStartMoment = MomentHelper.isAfterOrEqual(invention.getStartMoment(), now) && invention.getDraftMode() || !invention.getDraftMode();
-				isValidEndMoment = MomentHelper.isAfterOrEqual(invention.getEndMoment(), now) && invention.getDraftMode() || !invention.getDraftMode();
-
-				super.state(context, isValidStartMoment, "startMoment", "acme.validation.invention.valid-start-moment.message");
-				super.state(context, isValidEndMoment, "endMoment", "acme.validation.invention.valid-end-moment.message");
 			}
 			{
 				boolean isValidInterval;
