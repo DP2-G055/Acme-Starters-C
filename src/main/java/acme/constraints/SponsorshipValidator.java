@@ -29,7 +29,6 @@ public class SponsorshipValidator extends AbstractValidator<ValidSponsorship, Sp
 
 	@Override
 	public boolean isValid(final Sponsorship sponsorship, final ConstraintValidatorContext context) {
-		// HINT: job can be null
 		assert context != null;
 
 		boolean result;
@@ -57,7 +56,7 @@ public class SponsorshipValidator extends AbstractValidator<ValidSponsorship, Sp
 			{
 				boolean isValidInterval;
 
-				isValidInterval = MomentHelper.isAfter(sponsorship.getEndMoment(), sponsorship.getStartMoment());
+				isValidInterval = sponsorship.isDraftMode() || MomentHelper.isAfter(sponsorship.getEndMoment(), sponsorship.getStartMoment());
 
 				super.state(context, isValidInterval, "endMoment", "acme.validation.sponsorship.valid-interval.message");
 			}

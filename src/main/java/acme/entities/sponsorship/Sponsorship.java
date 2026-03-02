@@ -1,11 +1,6 @@
 
 package acme.entities.sponsorship;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -96,24 +91,23 @@ public class Sponsorship extends AbstractEntity {
 	}
 
 	@Transient
-	public double monthsActive() {
-		LocalDate start = this.startMoment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-		LocalDate end = this.endMoment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-		long fullMonths = ChronoUnit.MONTHS.between(start, end);
-
-		LocalDate adjustedStart = start.plusMonths(fullMonths);
-
-		long remainingDays = ChronoUnit.DAYS.between(adjustedStart, end);
-
-		long daysInMonth = adjustedStart.lengthOfMonth();
-
-		double fractionalMonth = (double) remainingDays / daysInMonth;
-
-		double totalMonths = fullMonths + fractionalMonth;
-
-		return BigDecimal.valueOf(totalMonths).setScale(1, RoundingMode.HALF_UP).doubleValue();
+	public double monthsActive() {/*
+									 * LocalDate start = this.startMoment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+									 * LocalDate end = this.endMoment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+									 * 
+									 * long fullMonths = ChronoUnit.MONTHS.between(start, end);
+									 * 
+									 * LocalDate adjustedStart = start.plusMonths(fullMonths);
+									 * 
+									 * long remainingDays = ChronoUnit.DAYS.between(adjustedStart, end);
+									 * long daysInMonth = adjustedStart.lengthOfMonth();
+									 * 
+									 * double fractionalMonth = (double) remainingDays / daysInMonth;
+									 * double totalMonths = fullMonths + fractionalMonth;
+									 * 
+									 * return BigDecimal.valueOf(totalMonths).setScale(1, RoundingMode.HALF_UP).doubleValue();
+									 */
+		return 0;
 	}
 
 	// Relationships ----------------------------------------------------------

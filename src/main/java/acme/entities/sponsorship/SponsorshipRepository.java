@@ -12,7 +12,7 @@ public interface SponsorshipRepository extends AbstractRepository {
 	@Query("select sum(d.money.amount) from Donation d where d.sponsorship.id = :sponsorshipId")
 	Double computeTotalMoney(int sponsorshipId);
 
-	@Query("select count(*) from Donation d where d.sponsorship.id = :sponsorshipId")
+	@Query("select count(d) from Donation d where d.sponsorship.id = :sponsorshipId")
 	Integer countDonationsBySponsorship(int sponsorshipId);
 
 	@Query("select s from Sponsorship s where s.ticker = :ticker")

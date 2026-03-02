@@ -4,3 +4,4 @@ acme.validation.sponsorship.ticker.message			   = 2 letras mayúsculas, 2 númer
 acme.validation.sponsorship.duplicated-ticker.message = Referencia ya usada
 acme.validation.sponsorship.donations.message = El sponsorship debe tener alguna donación para poder ser publicado
 acme.validation.sponsorship.valid-interval.message = La fecha de fin debe ser posterior a la de comienzo
+acme.validation.donation.currency.message = Debe estar en Euros
