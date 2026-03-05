@@ -1,0 +1,14 @@
+key,title,achievements,effort,kind,key:campaign
+#title (ValidHeader: 1..75)
+milestone-01,"","Valid achievements",10.0,TEASER,campaign-01
+milestone-02,"TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT","Valid achievements",10.0,ENGAGING,campaign-01
+#achievements (ValidText: 1..255)
+milestone-03,"Valid title","",10.0,CONVERSION,campaign-01
+milestone-04,"Valid title","EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",10.0,TEASER,campaign-01
+#effort (ValidNumber: 0..100)
+milestone-05,"Valid title","Valid achievements",-0.01,TEASER,campaign-01
+milestone-06,"Valid title","Valid achievements",100.01,TEASER,campaign-01
+#kind (enum: TEASER|ENGAGING|CONVERSION)
+milestone-07,"Valid title","Valid achievements",10.0,INVALID,campaign-01
+#campaign (mandatory relationship)
+milestone-08,"Valid title","Valid achievements",10.0,TEASER,
