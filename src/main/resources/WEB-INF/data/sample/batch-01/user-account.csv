@@ -13,3 +13,6 @@ user-account-sponsor-03,true,"UserIdentity{name: 'Adrian', surname: 'Lopez', ema
 user-account-inventor-01,true,"UserIdentity{name: 'Inventor1',surname: 'Acme', email: 'inventor1@acme.com'}",inventor1,inventor1
 user-account-inventor-02,true,"UserIdentity{name: 'Inventor2', surname: 'Acme', email: 'inventor2@acme.com'}",inventor2,inventor2
 user-account-inventor-03,true,"UserIdentity{name: 'Inventor3', surname: 'Acme', email: 'inventor3@acme.com'}",inventor3,inventor3
+user-account-spokesperson-01,true,"UserIdentity{name: 'John', surname: 'Doe', email: 'john.doe@acme.com'}",spokesperson1,spokesperson1
+user-account-spokesperson-02,true,"UserIdentity{name: 'Jane', surname: 'Smith', email: 'jane.smith@acme.com'}",spokesperson2,spokesperson2
+user-account-spokesperson-03,true,"UserIdentity{name: 'Empty', surname: 'Spokesperson', email: 'empty@acme.com'}",spokesperson3,spokesperson3
