@@ -1,0 +1,25 @@
+key,ticker,name,description,startMoment,endMoment,moreInfo,draftMode,key:spokesperson
+#ticker (pattern: ^[A-Z]{2}[0-9]{2}-\w{5,10}$)
+campaign-01,ca12-abcde,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-02,CA1-abcde,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-03,CA12abcde,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-04,CA12-abc,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-05,CA12-abcde$,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+#name (ValidHeader: 1..75)
+campaign-06,CA12-abcde,"","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-07,CA12-abcdf,"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+#description (ValidText: 1..255)
+campaign-08,CA12-abcdg,"Valid name","",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-09,CA12-abcdh,"Valid name","BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",2100/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+#moments (ENFORCE_FUTURE)
+campaign-10,CA12-abcdi,"Valid name","Valid description",2000/01/01 00:00,2100/02/01 00:00,http://example.com,true,spokesperson-01
+campaign-11,CA12-abcdj,"Valid name","Valid description",2100/01/01 00:00,2000/02/01 00:00,http://example.com,true,spokesperson-01
+#startMoment + endMoment (invalid interval: start >= end)
+campaign-12,CA12-abcdk,"Valid name","Valid description",2100/02/01 00:00,2100/01/01 00:00,http://example.com,true,spokesperson-01
+#moreInfo (ValidUrl when present)
+campaign-13,CA12-abcdl,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,not-a-url,true,spokesperson-01
+#draftMode (no-milestones rule: draftMode=false and zero milestones)
+campaign-14,CA12-abcdm,"Valid name","Valid description",2100/01/01 00:00,2100/02/01 00:00,http://example.com,false,spokesperson-01
+#duplicated ticker (ValidCampaign)
+campaign-15,CA12-dup01,"Valid name","Valid description",2100/03/01 00:00,2100/04/01 00:00,http://example.com,true,spokesperson-01
+campaign-16,CA12-dup01,"Valid name","Valid description",2100/05/01 00:00,2100/06/01 00:00,http://example.com,true,spokesperson-01
