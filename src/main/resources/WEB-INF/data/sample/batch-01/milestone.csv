@@ -1,4 +1,4 @@
-key,name,description,startMoment,endMoment,moreInfo,kind,key:campaign
+key,title,achievements,startMoment,endMoment,moreInfo,kind,key:campaign
 #base-entity
 milestone-01,"Initial Teaser","First contact with the audience. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","2100/07/01 10:00","2100/07/15 10:00",http://example.org/m1,TEASER,campaign-01
 #kind-variations
