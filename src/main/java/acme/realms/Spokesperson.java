@@ -16,18 +16,20 @@ import lombok.Setter;
 @Setter
 public class Spokesperson extends AbstractRole {
 
-	@Mandatory
-	@ValidText
-	@Column
-	private String	cv;
+	private static final long	serialVersionUID	= 1L;
 
 	@Mandatory
 	@ValidText
 	@Column
-	private String	achievements;
+	private String				cv;
+
+	@Mandatory
+	@ValidText
+	@Column
+	private String				achievements;
 
 	@Mandatory
 	@Valid
 	@Column
-	private Boolean	licensed;
+	private Boolean				licensed;
 }

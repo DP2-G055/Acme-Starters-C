@@ -75,6 +75,11 @@ public class Campaign extends AbstractEntity {
 	@Column
 	private String				moreInfo;
 
+	@Mandatory
+	@Valid
+	@Column
+	private Boolean				draftMode;
+
 
 	@Valid
 	@Transient
@@ -91,10 +96,4 @@ public class Campaign extends AbstractEntity {
 		else
 			return this.repository.sumEffortByCampaignId(this.getId());
 	}
-
-
-	@Mandatory
-	@Valid
-	@Column
-	private Boolean draftMode;
 }
