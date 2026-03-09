@@ -85,6 +85,7 @@ public class Invention extends AbstractEntity {
 	@Valid
 	@Transient
 	private Double monthsActive() {
+		//comprobar que no son nulos
 		Duration duracion = MomentHelper.computeDuration(this.startMoment, this.endMoment);
 		return (double) 0.0;
 	}

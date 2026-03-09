@@ -38,6 +38,7 @@ public class Part extends AbstractEntity {
 	@Column
 	private String				description;
 
+	//  validador custom para precio siempre en euros
 	@Mandatory
 	@ValidMoney(min = 0, max = 1000000)
 	@Column
