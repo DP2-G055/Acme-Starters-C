@@ -21,7 +21,14 @@ public class InventorPartShowService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int inventorId;
+
+		inventorId = super.getRequest().getPrincipal().getAccountId();
+
+		status = this.part != null && this.part.getInvention().getInventor().getUserAccount().getId() == inventorId;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override

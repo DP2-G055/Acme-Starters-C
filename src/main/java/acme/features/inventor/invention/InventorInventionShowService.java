@@ -19,7 +19,14 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int inventorId;
+
+		inventorId = super.getRequest().getPrincipal().getAccountId();
+
+		status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override

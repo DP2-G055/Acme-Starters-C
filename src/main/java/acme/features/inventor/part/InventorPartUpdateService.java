@@ -44,10 +44,13 @@ public class InventorPartUpdateService extends AbstractService<Inventor, Part> {
 	@Override
 	public void authorise() {
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (status)
-			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		super.setAuthorised(status);
+		int inventorId;
+
+		inventorId = super.getRequest().getPrincipal().getAccountId();
+
+		status = this.part != null && this.part.getInvention().getInventor().getUserAccount().getId() == inventorId && this.part.getInvention().getDraftMode();
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
