@@ -1,6 +1,7 @@
 
 package acme.entities.sponsorship;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidUrl;
+import acme.client.helpers.MomentHelper;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidSponsorship;
 import acme.constraints.ValidText;
@@ -90,23 +92,8 @@ public class Sponsorship extends AbstractEntity {
 	}
 
 	@Transient
-	public double monthsActive() {/*
-									 * LocalDate start = this.startMoment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-									 * LocalDate end = this.endMoment.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-									 * 
-									 * long fullMonths = ChronoUnit.MONTHS.between(start, end);
-									 * 
-									 * LocalDate adjustedStart = start.plusMonths(fullMonths);
-									 * 
-									 * long remainingDays = ChronoUnit.DAYS.between(adjustedStart, end);
-									 * long daysInMonth = adjustedStart.lengthOfMonth();
-									 * 
-									 * double fractionalMonth = (double) remainingDays / daysInMonth;
-									 * double totalMonths = fullMonths + fractionalMonth;
-									 * 
-									 * return BigDecimal.valueOf(totalMonths).setScale(1, RoundingMode.HALF_UP).doubleValue();
-									 */
-		return 0;
+	public double monthsActive() {
+		return MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
 	}
 
 	// Relationships ----------------------------------------------------------
