@@ -27,27 +27,36 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 		int inventorId;
 		Invention inventionPublished;
 
-		inventionId = super.getRequest().getData("inventionId", Integer.class);
+		if (!super.getRequest().hasData("inventionId") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
+			status = false;
+		else if (this.parts.size() == 0 || this.parts.get(0).getInvention().getDraftMode()) {
+			inventionId = super.getRequest().getData("inventionId", Integer.class);
 
-		inventionPublished = this.repository.findInventionById(inventionId);
+			inventionPublished = this.repository.findInventionById(inventionId);
 
-		inventorId = super.getRequest().getPrincipal().getAccountId();
+			inventorId = super.getRequest().getPrincipal().getAccountId();
 
-		status = inventionPublished != null && inventionPublished.getInventor().getUserAccount().getId() == inventorId;
+			status = inventionPublished != null && inventionPublished.getInventor().getUserAccount().getId() == inventorId;
+		} else
+			status = true;
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObjects(this.parts, "name", "description", "cost");
-		super.unbindGlobal("id", super.getRequest().getData("inventionId", int.class));
+		if (this.parts != null && super.getRequest().hasData("inventionId")) {
+			super.unbindObjects(this.parts, "name", "description", "cost");
+			super.unbindGlobal("id", super.getRequest().getData("inventionId", int.class));
+		}
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("inventionId", int.class);
-		this.parts = this.repository.findAllPartsByInventionId(id);
+		if (super.getRequest().hasData("inventionId")) {
+			int id = super.getRequest().getData("inventionId", int.class);
+			this.parts = this.repository.findAllPartsByInventionId(id);
+		}
 	}
 
 }

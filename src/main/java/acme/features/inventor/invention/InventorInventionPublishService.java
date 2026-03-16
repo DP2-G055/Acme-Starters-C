@@ -1,9 +1,12 @@
 
 package acme.features.inventor.invention;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.client.helpers.MomentHelper;
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
@@ -20,8 +23,10 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.invention = this.repository.findInventionById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.invention = this.repository.findInventionById(id);
+		}
 	}
 
 	@Override
@@ -29,9 +34,13 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 		boolean status;
 		int inventorId;
 
-		inventorId = super.getRequest().getPrincipal().getAccountId();
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else {
+			inventorId = super.getRequest().getPrincipal().getAccountId();
 
-		status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId && this.invention.getDraftMode();
+			status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId && this.invention.getDraftMode();
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -50,10 +59,17 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 			boolean hasParts = partsCount > 0;
 			super.getResponse().getErrors().state(super.getRequest(), hasParts, "ticker", "inventor.invention.form.error.no-parts");
 		}
-		{
-			// añadir que si la fecha es inferior a la actual enseñar mensaje de error
+		if (this.invention.getStartMoment() != null && this.invention.getEndMoment() != null) {
+			Date startMoment = this.invention.getStartMoment();
+			Date endMoment = this.invention.getEndMoment();
+			Date now = MomentHelper.getCurrentMoment();
+			boolean validInterval = MomentHelper.isBefore(now, endMoment) && MomentHelper.isBefore(now, endMoment);
+			super.getResponse().getErrors().state(super.getRequest(), validInterval, "startMoment", "inventor.invention.form.error.valid-interval.after-current-moment");
+			if (validInterval) {
+				validInterval = MomentHelper.isBefore(startMoment, endMoment);
+				super.getResponse().getErrors().state(super.getRequest(), validInterval, "startMoment", "inventor.invention.form.error.valid-interval.start-after-end");
+			}
 		}
-
 	}
 
 	@Override
@@ -64,7 +80,8 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
+		if (this.invention != null)
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
 	}
 
 	@Override
