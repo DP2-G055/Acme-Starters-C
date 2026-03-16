@@ -19,3 +19,4 @@ acme.validation.invention.valid-end-moment.message = End moment must be after ba
 acme.validation.campaign.duplicated-ticker.message  = The ticker is duplicated
 acme.validation.campaign.no-milestones.message = This campaign does not have any milestone
 acme.validation.campaign.invalid-interval.message = Start momment must be previous to end momento
+acme.validation.cost.message = The cost must be typed in EUR annotation

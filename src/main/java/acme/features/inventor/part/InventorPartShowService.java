@@ -21,21 +21,37 @@ public class InventorPartShowService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int inventorId;
+
+		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
+			status = false;
+		else if (this.part.getInvention().getDraftMode()) {
+			inventorId = super.getRequest().getPrincipal().getAccountId();
+
+			status = this.part != null && this.part.getInvention().getInventor().getUserAccount().getId() == inventorId;
+		} else
+			status = true;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.part = this.repository.findPartById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.part = this.repository.findPartById(id);
+		}
 	}
 
 	@Override
 	public void unbind() {
-		SelectChoices kindChoices = SelectChoices.from(PartKind.class, this.part.getKind());
-		super.unbindObject(this.part, "name", "description", "cost", "kind");
-		super.unbindGlobal("draftMode", this.part.getInvention().getDraftMode());
-		super.unbindGlobal("inventionId", this.part.getInvention().getId());
-		super.unbindGlobal("kindOptions", kindChoices);
+		if (this.part != null) {
+			SelectChoices kindChoices = SelectChoices.from(PartKind.class, this.part.getKind());
+			super.unbindObject(this.part, "name", "description", "cost", "kind");
+			super.unbindGlobal("draftMode", this.part.getInvention().getDraftMode());
+			super.unbindGlobal("inventionId", this.part.getInvention().getId());
+			super.unbindGlobal("kindOptions", kindChoices);
+		}
 	}
 }

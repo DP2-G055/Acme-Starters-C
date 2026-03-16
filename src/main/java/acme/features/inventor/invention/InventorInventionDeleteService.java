@@ -1,12 +1,15 @@
 
 package acme.features.inventor.invention;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
+import acme.entities.part.Part;
 import acme.realms.Inventor;
 
 @Service
@@ -20,18 +23,26 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.invention = this.repository.findInventionById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.invention = this.repository.findInventionById(id);
+		}
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (status)
-			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		status = status && this.invention.getDraftMode();
-		super.setAuthorised(status);
+		int inventorId;
+
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else {
+			inventorId = super.getRequest().getPrincipal().getAccountId();
+
+			status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId && this.invention.getDraftMode();
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -46,12 +57,16 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 
 	@Override
 	public void execute() {
+		List<Part> parts = this.repository.findPartsByInventionId(this.invention.getId());
+		for (int i = 0; i < parts.size(); i++)
+			this.repository.delete(parts.get(i));
 		this.repository.delete(this.invention);
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
+		if (this.invention != null)
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
 	}
 
 	@Override

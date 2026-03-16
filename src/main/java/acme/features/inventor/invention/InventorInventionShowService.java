@@ -19,17 +19,34 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int inventorId;
+
+		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
+			status = false;
+		else if (this.invention.getDraftMode()) {
+			inventorId = super.getRequest().getPrincipal().getAccountId();
+
+			status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId;
+		} else
+			status = true;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.invention = this.repository.findInventionById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.invention = this.repository.findInventionById(id);
+		}
+
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "id", "draftMode");
+		if (this.invention != null)
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "id", "draftMode");
 	}
+
 }
