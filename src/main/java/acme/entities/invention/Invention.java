@@ -20,6 +20,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidUrl;
+import acme.client.helpers.MathHelper;
 import acme.client.helpers.MomentHelper;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidInvention;
@@ -85,10 +86,11 @@ public class Invention extends AbstractEntity {
 	@Valid
 	@Transient
 	private Double monthsActive() {
-		if (this.getStartMoment() != null && this.getEndMoment() != null)
-			return MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
-		else
-			return (double) 0.0;
+		if (this.getStartMoment() != null && this.getEndMoment() != null) {
+			Double months = MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
+			return MathHelper.roundOff(months, 0);
+		} else
+			return 0.0;
 	}
 
 	@Valid
