@@ -46,12 +46,12 @@ public class InventorPartDeleteService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void bind() {
-		super.bindObject(this.part, "name", "description", "cost", "kind");
+
 	}
 
 	@Override
 	public void validate() {
-		super.validateObject(this.part);
+
 	}
 
 	@Override
