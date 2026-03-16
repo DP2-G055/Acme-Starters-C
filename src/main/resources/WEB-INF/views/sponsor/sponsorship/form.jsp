@@ -10,7 +10,6 @@
 	<acme:form-moment code="sponsor.sponsorship.form.label.startMoment" path="startMoment"/>
 	<acme:form-moment code="sponsor.sponsorship.form.label.endMoment" path="endMoment"/>
 	<acme:form-url code="sponsor.sponsorship.form.label.moreInfo" path="moreInfo"/>
-	<acme:form-textbox code="sponsor.sponsorship.form.label.sponsor" path="sponsor" readonly="true"/>	
 
 	<jstl:choose>	 
 		<jstl:when test="${_command == 'show' && draftMode == false}">
