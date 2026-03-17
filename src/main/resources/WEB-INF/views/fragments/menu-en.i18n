@@ -17,6 +17,8 @@ master.menu.anonymous.favourite-link = Favourite link
 
 master.menu.any = Any
 master.menu.any.inventions= List published inventions
+master.menu.any.sponsorships= List published sponsorships
+
 
 # master.menu.administrator ###################################################
 
@@ -40,6 +42,11 @@ master.menu.consumer.favourite-link = Favourite link
 
 master.menu.inventor = Inventor
 master.menu.inventor.invention.list = List inventions
+
+# master.menu.sponsor ##########################################################
+
+master.menu.sponsor = Sponsor
+master.menu.sponsor.sponsorship.list = List sponsorships
 
 # master.menu.user-account ####################################################
 
