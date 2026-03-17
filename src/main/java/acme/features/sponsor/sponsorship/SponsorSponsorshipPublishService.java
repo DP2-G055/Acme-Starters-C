@@ -1,6 +1,8 @@
 
 package acme.features.sponsor.sponsorship;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,11 +57,19 @@ public class SponsorSponsorshipPublishService extends AbstractService<Sponsor, S
 			super.state(hasDonations, "*", "acme.validation.sponsorship.donations.message");
 		}
 		{
-			boolean correctMoments;
+			boolean futureInterval;
+			boolean validInterval;
 
-			correctMoments = MomentHelper.isAfter(this.sponsorship.getStartMoment(), MomentHelper.getCurrentMoment()) && //
-				MomentHelper.isAfter(this.sponsorship.getEndMoment(), this.sponsorship.getStartMoment());
-			super.state(correctMoments, "startMoment", "acme.validation.sponsorship.moments.message");
+			Date startMoment = this.sponsorship.getStartMoment();
+			Date endMoment = this.sponsorship.getEndMoment();
+
+			futureInterval = MomentHelper.isAfter(this.sponsorship.getStartMoment(), MomentHelper.getCurrentMoment()) && //
+				MomentHelper.isAfter(this.sponsorship.getEndMoment(), MomentHelper.getCurrentMoment());
+			super.state(futureInterval, "startMoment", "acme.validation.sponsorship.future-interval.message");
+
+			validInterval = MomentHelper.isAfter(endMoment, startMoment);
+			super.state(validInterval, "startMoment", "acme.validation.sponsorship.valid-interval.message");
+
 		}
 	}
 
