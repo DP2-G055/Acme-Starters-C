@@ -24,7 +24,7 @@ public class InventorPartShowService extends AbstractService<Inventor, Part> {
 		boolean status;
 		int inventorId;
 
-		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
+		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class) || this.part == null)
 			status = false;
 		else if (this.part.getInvention().getDraftMode()) {
 			inventorId = super.getRequest().getPrincipal().getAccountId();

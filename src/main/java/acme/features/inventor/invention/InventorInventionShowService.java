@@ -22,7 +22,7 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 		boolean status;
 		int inventorId;
 
-		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
+		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class) || this.invention == null)
 			status = false;
 		else if (this.invention.getDraftMode()) {
 			inventorId = super.getRequest().getPrincipal().getAccountId();
