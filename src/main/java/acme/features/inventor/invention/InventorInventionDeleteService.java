@@ -47,19 +47,20 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 
 	@Override
 	public void bind() {
-		super.bindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
+
 	}
 
 	@Override
 	public void validate() {
-		super.validateObject(this.invention);
+
 	}
 
 	@Override
 	public void execute() {
 		List<Part> parts = this.repository.findPartsByInventionId(this.invention.getId());
-		for (int i = 0; i < parts.size(); i++)
-			this.repository.delete(parts.get(i));
+		if (!parts.isEmpty())
+			for (int i = 0; i < parts.size(); i++)
+				this.repository.delete(parts.get(i));
 		this.repository.delete(this.invention);
 	}
 
