@@ -49,7 +49,7 @@ public class SponsorshipValidator extends AbstractValidator<ValidSponsorship, Sp
 				boolean hasDonations;
 				int numDonations = this.repository.countDonationsBySponsorship(sponsorship.getId());
 
-				hasDonations = sponsorship.isDraftMode() || numDonations == 0;
+				hasDonations = sponsorship.isDraftMode() || numDonations > 0;
 
 				super.state(context, hasDonations, "*", "acme.validation.sponsorship.donations.message");
 			}
