@@ -8,16 +8,20 @@ import org.springframework.stereotype.Repository;
 
 import acme.client.repositories.AbstractRepository;
 import acme.entities.invention.Invention;
+import acme.entities.part.Part;
 
 @Repository
 public interface InventorInventionRepository extends AbstractRepository {
 
-	@Query("select i from Invention i where i.inventor.userAccount.id = :userAccountId")
-	public List<Invention> findInventionByUserAccountId(int userAccountId);
+	@Query("select i from Invention i where i.inventor.userAccount.id = :userAccountId or i.draftMode = false")
+	public List<Invention> findInventionsByUserAccountId(int userAccountId);
 
 	@Query("select i from Invention i where i.id = :inventionId")
 	public Invention findInventionById(int inventionId);
 
 	@Query("select count(p) from Part p where p.invention.id = :inventionId")
 	Integer countPartsByInventionId(int inventionId);
+
+	@Query("select p from Part p where p.invention.id = :inventionId")
+	List<Part> findPartsByInventionId(int inventionId);
 }

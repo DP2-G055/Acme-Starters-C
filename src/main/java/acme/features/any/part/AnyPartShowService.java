@@ -19,17 +19,33 @@ public class AnyPartShowService extends AbstractService<Any, Part> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+		int id;
+		Part partWithInventionPublished;
+
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else {
+			id = super.getRequest().getData("id", Integer.class);
+
+			partWithInventionPublished = this.repository.findPartById(id);
+
+			status = partWithInventionPublished != null && !partWithInventionPublished.getInvention().getDraftMode();
+		}
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.part = this.repository.findPartById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.part = this.repository.findPartById(id);
+		}
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.part, "name", "description", "cost", "kind");
+		if (this.part != null)
+			super.unbindObject(this.part, "name", "description", "cost", "kind");
 	}
 }

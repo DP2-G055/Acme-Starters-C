@@ -15,3 +15,5 @@ inventor.invention.form.button.publish = Publish
 inventor.invention.form.button.delete = Delete
 inventor.invention.form.button.create = Create
 inventor.invention.form.error.no-parts = The invention cannot be published because it has no associated parts
+inventor.invention.form.error.valid-interval.after-current-moment = Start moment and end moment must be after current date
+inventor.invention.form.error.valid-interval.start-after-end = Start moment must be after end moment

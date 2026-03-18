@@ -19,18 +19,33 @@ public class AnyInventionShowService extends AbstractService<Any, Invention> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else {
+			int id = super.getRequest().getData("id", Integer.class);
+			Invention inventionPublished = this.repository.findInventionById(id);
+
+			status = inventionPublished != null && !inventionPublished.getDraftMode();
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.invention = this.repository.findInventionById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.invention = this.repository.findInventionById(id);
+		}
 	}
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
-		super.unbindGlobal("inventorId", this.invention.getInventor().getId());
+		if (this.invention != null) {
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
+			super.unbindGlobal("inventorId", this.invention.getInventor().getId());
+		}
 	}
 }

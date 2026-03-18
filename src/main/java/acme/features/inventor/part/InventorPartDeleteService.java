@@ -22,27 +22,36 @@ public class InventorPartDeleteService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.part = this.repository.findPartById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.part = this.repository.findPartById(id);
+		}
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (status)
-			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		super.setAuthorised(status);
+		int inventorId;
+
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else {
+			inventorId = super.getRequest().getPrincipal().getAccountId();
+
+			status = this.part != null && this.part.getInvention().getInventor().getUserAccount().getId() == inventorId && this.part.getInvention().getDraftMode();
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void bind() {
-		super.bindObject(this.part, "name", "description", "cost", "kind");
+
 	}
 
 	@Override
 	public void validate() {
-		super.validateObject(this.part);
+
 	}
 
 	@Override
@@ -52,11 +61,13 @@ public class InventorPartDeleteService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void unbind() {
-		SelectChoices kindChoices = SelectChoices.from(PartKind.class, this.part.getKind());
-		super.unbindObject(this.part, "name", "description", "cost", "kind");
-		super.unbindGlobal("draftMode", this.part.getInvention().getDraftMode());
-		super.unbindGlobal("inventionId", this.part.getInvention().getId());
-		super.unbindGlobal("kindOptions", kindChoices);
+		if (this.part != null) {
+			SelectChoices kindChoices = SelectChoices.from(PartKind.class, this.part.getKind());
+			super.unbindObject(this.part, "name", "description", "cost", "kind");
+			super.unbindGlobal("draftMode", this.part.getInvention().getDraftMode());
+			super.unbindGlobal("inventionId", this.part.getInvention().getId());
+			super.unbindGlobal("kindOptions", kindChoices);
+		}
 	}
 
 	@Override

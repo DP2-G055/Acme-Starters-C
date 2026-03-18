@@ -35,20 +35,26 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.invention = this.repository.findInventionById(id);
+		if (super.getRequest().hasData("id")) {
+			int id = super.getRequest().getData("id", int.class);
+			this.invention = this.repository.findInventionById(id);
+		}
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
+		int inventorId;
 
-		if (status)
-			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		status = status && this.invention.getDraftMode();
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else {
+			inventorId = super.getRequest().getPrincipal().getAccountId();
 
-		super.setAuthorised(status);
+			status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId && this.invention.getDraftMode();
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
@@ -68,7 +74,8 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
+		if (this.invention != null)
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
 	}
 
 	@Override
