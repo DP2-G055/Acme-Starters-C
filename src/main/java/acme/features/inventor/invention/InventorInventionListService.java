@@ -21,7 +21,10 @@ public class InventorInventionListService extends AbstractService<Inventor, Inve
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+
+		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
+		super.setAuthorised(status);
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class InventorInventionListService extends AbstractService<Inventor, Inve
 	@Override
 	public void load() {
 		int inventorId = super.getRequest().getPrincipal().getAccountId();
-		this.inventions = this.repository.findInventionByUserAccountId(inventorId);
+		this.inventions = this.repository.findInventionsByUserAccountId(inventorId);
 	}
 
 }

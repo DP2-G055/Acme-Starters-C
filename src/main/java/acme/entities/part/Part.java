@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
-import acme.client.components.validation.ValidMoney;
+import acme.constraints.ValidCost;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidText;
 import acme.entities.invention.Invention;
@@ -39,7 +39,7 @@ public class Part extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@ValidMoney(min = 0, max = 1000000)
+	@ValidCost
 	@Column
 	private Money				cost;
 
