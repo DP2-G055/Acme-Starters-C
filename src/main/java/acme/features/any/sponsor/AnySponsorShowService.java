@@ -20,7 +20,14 @@ public class AnySponsorShowService extends AbstractService<Any, Sponsor> {
 
 	@Override
 	public void authorise() {
-		super.getResponse().setAuthorised(true);
+		boolean status;
+
+		if (!super.getRequest().hasData("id"))
+			status = false;
+		else
+			status = this.sponsor != null;
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
