@@ -19,6 +19,8 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 
 	private List<Part>				parts;
 
+	private Invention				invention;
+
 
 	@Override
 	public void authorise() {
@@ -48,6 +50,8 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 		if (this.parts != null && super.getRequest().hasData("inventionId")) {
 			super.unbindObjects(this.parts, "name", "description", "cost");
 			super.unbindGlobal("id", super.getRequest().getData("inventionId", int.class));
+			super.unbindGlobal("draftMode", this.invention.getDraftMode());
+
 		}
 	}
 
@@ -56,6 +60,7 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 		if (super.getRequest().hasData("inventionId")) {
 			int id = super.getRequest().getData("inventionId", int.class);
 			this.parts = this.repository.findAllPartsByInventionId(id);
+			this.invention = this.repository.findInventionById(id);
 		}
 	}
 

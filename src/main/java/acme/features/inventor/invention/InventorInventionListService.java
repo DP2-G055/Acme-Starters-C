@@ -35,7 +35,7 @@ public class InventorInventionListService extends AbstractService<Inventor, Inve
 	@Override
 	public void load() {
 		int inventorId = super.getRequest().getPrincipal().getAccountId();
-		this.inventions = this.repository.findInventionByUserAccountId(inventorId);
+		this.inventions = this.repository.findInventionsByUserAccountId(inventorId);
 	}
 
 }
