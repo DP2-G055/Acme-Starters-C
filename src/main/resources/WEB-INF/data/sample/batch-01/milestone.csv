@@ -1,0 +1,31 @@
+key,key:campaign,title,achievements,effort,kind
+#base-entity
+milestone-01,campaign-01,"Initial teaser","Kick-off announcement published on the website.",10.0,TEASER
+#title
+milestone-02,campaign-01,L,"Early teaser ready.",5.0,TEASER
+milestone-03,campaign-01,Lo,"Early teaser + landing draft.",7.5,TEASER
+milestone-04,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Teaser assets created and reviewed.",12.0,TEASER
+milestone-05,campaign-01,โลเร็ม อิปซัม,"International teaser prepared for Thai audience.",8.0,TEASER
+milestone-06,campaign-01,لوريم إيبسوم,"Arabic teaser copy drafted and approved.",9.0,TEASER
+milestone-07,campaign-01,洛伦·伊普森,"Chinese teaser text ready for posting.",6.0,TEASER
+milestone-08,campaign-01,<marquee>Hacked</marquee>,"Title includes HTML-like text to test UI encoding.",4.0,TEASER
+milestone-09,campaign-01,<script>alert(‘Hacked!’);</script>,"Title includes script-like text to test UI encoding.",3.0,TEASER
+milestone-10,campaign-01,' or 'A' = 'A,"Title includes SQL-like text to test UI encoding.",2.0,TEASER
+#achievements
+milestone-11,campaign-01,"Engagement push","L",20.0,ENGAGING
+milestone-12,campaign-01,"Engagement push","Lo",25.0,ENGAGING
+milestone-13,campaign-01,"Engagement push","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",30.0,ENGAGING
+milestone-14,campaign-01,"Engagement push",โลเร็ม อิปซัม,35.0,ENGAGING
+milestone-15,campaign-01,"Engagement push",لوريم إيبسوم,40.0,ENGAGING
+milestone-16,campaign-01,"Engagement push",洛伦·伊普森,45.0,ENGAGING
+milestone-17,campaign-01,"Engagement push",<marquee>Hacked</marquee>,50.0,ENGAGING
+milestone-18,campaign-01,"Engagement push",<script>alert(‘Hacked!’);</script>,55.0,ENGAGING
+milestone-19,campaign-01,"Engagement push",' or 'A' = 'A,60.0,ENGAGING
+#effort
+milestone-20,campaign-01,"Conversion milestone","Conversion funnel implemented.",0.0,CONVERSION
+milestone-21,campaign-01,"Conversion milestone","Conversion tracking configured.",0.01,CONVERSION
+milestone-22,campaign-01,"Conversion milestone","A/B test completed and winner deployed.",100.0,CONVERSION
+#kind
+milestone-23,campaign-01,"Teaser phase complete","Teaser phase closed, moving to engagement.",15.0,TEASER
+milestone-24,campaign-01,"Engagement phase complete","Engagement phase closed, moving to conversion.",65.0,ENGAGING
+milestone-25,campaign-01,"Conversion phase complete","Conversion phase closed, campaign ready to wrap.",85.0,CONVERSION
