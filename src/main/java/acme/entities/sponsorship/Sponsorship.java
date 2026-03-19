@@ -20,6 +20,7 @@ import acme.client.components.validation.Mandatory;
 import acme.client.components.validation.Optional;
 import acme.client.components.validation.ValidMoment;
 import acme.client.components.validation.ValidUrl;
+import acme.client.helpers.MathHelper;
 import acme.client.helpers.MomentHelper;
 import acme.constraints.ValidHeader;
 import acme.constraints.ValidSponsorship;
@@ -84,7 +85,7 @@ public class Sponsorship extends AbstractEntity {
 		Double wrapper;
 		wrapper = this.repository.computeTotalMoney(this.getId());
 		result = new Money();
-		result.setAmount(wrapper);
+		result.setAmount(wrapper > 0 ? wrapper : 0);
 		result.setCurrency("EUR");
 
 		return result;
@@ -92,8 +93,9 @@ public class Sponsorship extends AbstractEntity {
 	}
 
 	@Transient
-	public double monthsActive() {
-		return MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
+	public Double monthsActive() {
+		Double months = MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
+		return MathHelper.roundOff(months, 0);
 	}
 
 	// Relationships ----------------------------------------------------------
