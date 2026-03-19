@@ -23,7 +23,7 @@ public class AnyPartShowService extends AbstractService<Any, Part> {
 		int id;
 		Part partWithInventionPublished;
 
-		if (!super.getRequest().hasData("id"))
+		if (!super.getRequest().hasData("id", int.class))
 			status = false;
 		else {
 			id = super.getRequest().getData("id", Integer.class);
@@ -37,10 +37,15 @@ public class AnyPartShowService extends AbstractService<Any, Part> {
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			this.part = this.repository.findPartById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.part = this.repository.findPartById(id);
+			}
+		} catch (Exception e) {
+			this.part = null;
 		}
+
 	}
 
 	@Override

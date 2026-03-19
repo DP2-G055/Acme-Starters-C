@@ -21,7 +21,7 @@ public class AnyInventionShowService extends AbstractService<Any, Invention> {
 	public void authorise() {
 		boolean status;
 
-		if (!super.getRequest().hasData("id"))
+		if (!super.getRequest().hasData("id", int.class))
 			status = false;
 		else {
 			int id = super.getRequest().getData("id", Integer.class);
@@ -35,16 +35,23 @@ public class AnyInventionShowService extends AbstractService<Any, Invention> {
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			this.invention = this.repository.findInventionById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.invention = this.repository.findInventionById(id);
+			}
+		} catch (Exception e) {
+			this.invention = null;
 		}
+
 	}
 
 	@Override
 	public void unbind() {
 		if (this.invention != null) {
 			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
+			super.unbindGlobal("cost", this.invention.cost());
+			super.unbindGlobal("monthsActive", this.invention.monthsActive());
 			super.unbindGlobal("inventorId", this.invention.getInventor().getId());
 		}
 	}

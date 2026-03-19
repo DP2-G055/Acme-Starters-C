@@ -29,7 +29,7 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 		int inventorId;
 		Invention inventionPublished;
 
-		if (!super.getRequest().hasData("inventionId") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
+		if (!super.getRequest().hasData("inventionId", int.class) || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
 			status = false;
 		else if (this.parts.size() == 0 || this.parts.get(0).getInvention().getDraftMode()) {
 			inventionId = super.getRequest().getData("inventionId", Integer.class);
@@ -47,7 +47,7 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void unbind() {
-		if (this.parts != null && super.getRequest().hasData("inventionId")) {
+		if (this.parts != null && super.getRequest().hasData("inventionId", int.class)) {
 			super.unbindObjects(this.parts, "name", "description", "cost");
 			super.unbindGlobal("id", super.getRequest().getData("inventionId", int.class));
 			super.unbindGlobal("draftMode", this.invention.getDraftMode());
@@ -57,11 +57,17 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("inventionId")) {
-			int id = super.getRequest().getData("inventionId", int.class);
-			this.parts = this.repository.findAllPartsByInventionId(id);
-			this.invention = this.repository.findInventionById(id);
+		try {
+			if (super.getRequest().hasData("inventionId", int.class)) {
+				int id = super.getRequest().getData("inventionId", int.class);
+				this.parts = this.repository.findAllPartsByInventionId(id);
+				this.invention = this.repository.findInventionById(id);
+			}
+		} catch (Exception e) {
+			this.parts = null;
+			this.invention = null;
 		}
+
 	}
 
 }

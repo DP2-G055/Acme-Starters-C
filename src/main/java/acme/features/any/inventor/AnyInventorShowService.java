@@ -21,7 +21,7 @@ public class AnyInventorShowService extends AbstractService<Any, Inventor> {
 	public void authorise() {
 		boolean status;
 
-		if (!super.getRequest().hasData("id"))
+		if (!super.getRequest().hasData("id", int.class))
 			status = false;
 		else
 			status = this.inventor != null;
@@ -31,8 +31,14 @@ public class AnyInventorShowService extends AbstractService<Any, Inventor> {
 
 	@Override
 	public void load() {
-		int id = super.getRequest().getData("id", int.class);
-		this.inventor = this.repository.findInventorById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.inventor = this.repository.findInventorById(id);
+			}
+		} catch (Exception e) {
+			this.inventor = null;
+		}
 	}
 
 	@Override
