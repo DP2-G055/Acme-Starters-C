@@ -85,7 +85,7 @@ public class Sponsorship extends AbstractEntity {
 		Double wrapper;
 		wrapper = this.repository.computeTotalMoney(this.getId());
 		result = new Money();
-		result.setAmount(wrapper > 0 ? wrapper : 0);
+		result.setAmount(wrapper != null && wrapper > 0 ? wrapper : 00);
 		result.setCurrency("EUR");
 
 		return result;
@@ -95,7 +95,10 @@ public class Sponsorship extends AbstractEntity {
 	@Transient
 	public Double monthsActive() {
 		Double months = MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
-		return MathHelper.roundOff(months, 0);
+		if (months < 0)
+			return 0.0;
+		else
+			return MathHelper.roundOff(months, 0);
 	}
 
 	// Relationships ----------------------------------------------------------
