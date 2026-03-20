@@ -92,7 +92,7 @@ public class Campaign extends AbstractEntity {
 			return 0.0;
 	}
 
-	//corregir esfuerzo a 0 si no hay milestone en vez de null
+	@Valid
 	@Transient
 	private Double effort() {
 		if (this.repository.getMilestonesByCampaignId(this.getId()).isEmpty())
