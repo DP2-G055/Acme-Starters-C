@@ -1,2 +1,10 @@
-key,address,im,gold,key:user-account
-sponsor-01,,,TRUE,
+key,address,im,gold
+sponsor-01,,,TRUE
+#address
+sponsor-02,"","Lorem ipsum dolor sit amet, consectetu",true
+sponsor-03,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut enim ad minim veniam? Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i","Lorem ipsum dolor sit amet, consectetu",true
+#im
+sponsor-04,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","",TRUE
+sponsor-05,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tem",true
+#User-account
+sponsor-07,"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",true
