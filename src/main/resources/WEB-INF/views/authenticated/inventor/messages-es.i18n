@@ -1,8 +1,8 @@
-authenticated.consumer.form.title = Detalles de inventor
+authenticated.inventor.form.title = Detalles de inventor
 
-authenticated.consumer.form.label.bio = Biografía
-authenticated.consumer.form.label.keyWords = Palabras clave
-authenticated.consumer.form.label.licensed = Licenciado
+authenticated.inventor.form.label.bio = Biografía
+authenticated.inventor.form.label.keyWords = Palabras clave
+authenticated.inventor.form.label.licensed = Licenciado
 
-authenticated.consumer.form.button.create = Registrar
-authenticated.consumer.form.button.update = Actualizar
+authenticated.inventor.form.button.create = Registrar
+authenticated.inventor.form.button.update = Actualizar
