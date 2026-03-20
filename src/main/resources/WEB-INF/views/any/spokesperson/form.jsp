@@ -4,7 +4,6 @@
 <%@taglib prefix="acme" uri="http://acme-framework.org/"%>
 
 <acme:form>
-	<acme:form-textbox code="any.spokesperson.form.fullName" path="fullName"/>
 	<acme:form-textbox code="any.spokesperson.form.cv" path="cv"/>
 	<acme:form-textbox code="any.spokesperson.form.achievements" path="achievements"/>
 	<acme:form-textbox code="any.spokesperson.form.licensed" path="licensed"/>
