@@ -31,7 +31,7 @@ public class SponsorSponsorshipListService extends AbstractService<Sponsor, Spon
 		int sponsorId;
 
 		sponsorId = super.getRequest().getPrincipal().getActiveRealm().getId();
-		this.sponsorships = this.repository.findSponsorshipsByUserAccountId(sponsorId);
+		this.sponsorships = this.repository.findSponsorshipsBySponsorId(sponsorId);
 	}
 
 	@Override
