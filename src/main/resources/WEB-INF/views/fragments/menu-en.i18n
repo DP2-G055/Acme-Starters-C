@@ -13,6 +13,7 @@
 master.menu.any = Any
 master.menu.any.inventions= List published inventions
 master.menu.any.sponsorships= List published sponsorships
+master.menu.any.campaigns = List published campaigns
 
 # master.menu.administrator ###################################################
 
