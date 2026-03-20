@@ -13,7 +13,7 @@ import acme.entities.part.Part;
 @Repository
 public interface InventorInventionRepository extends AbstractRepository {
 
-	@Query("select i from Invention i where i.inventor.userAccount.id = :userAccountId or i.draftMode = false")
+	@Query("select i from Invention i where i.inventor.userAccount.id = :userAccountId")
 	public List<Invention> findInventionsByUserAccountId(int userAccountId);
 
 	@Query("select i from Invention i where i.id = :inventionId")

@@ -23,10 +23,15 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			this.invention = this.repository.findInventionById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.invention = this.repository.findInventionById(id);
+			}
+		} catch (Exception e) {
+			this.invention = null;
 		}
+
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 		boolean status;
 		int inventorId;
 
-		if (!super.getRequest().hasData("id"))
+		if (!super.getRequest().hasData("id", int.class))
 			status = false;
 		else {
 			inventorId = super.getRequest().getPrincipal().getAccountId();

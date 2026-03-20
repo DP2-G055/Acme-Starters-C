@@ -40,19 +40,24 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 	public void load() {
 		Invention invention;
 		int id;
-		if (super.getRequest().hasData("inventionId")) {
-			id = super.getRequest().getData("inventionId", int.class);
-			invention = this.repository.findInventionById(id);
-			this.part = new Part();
-			this.part.setInvention(invention);
+		try {
+			if (super.getRequest().hasData("inventionId", int.class)) {
+				id = super.getRequest().getData("inventionId", int.class);
+				invention = this.repository.findInventionById(id);
+				this.part = new Part();
+				this.part.setInvention(invention);
+			}
+		} catch (Exception e) {
+			this.part = null;
 		}
+
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
 		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (!super.getRequest().hasData("inventionId"))
+		if (!super.getRequest().hasData("inventionId", int.class))
 			status = false;
 		else if (status)
 			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();

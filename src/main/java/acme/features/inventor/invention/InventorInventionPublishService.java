@@ -23,10 +23,15 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			this.invention = this.repository.findInventionById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.invention = this.repository.findInventionById(id);
+			}
+		} catch (Exception e) {
+			this.invention = null;
 		}
+
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 		boolean status;
 		int inventorId;
 
-		if (!super.getRequest().hasData("id"))
+		if (!super.getRequest().hasData("id", int.class))
 			status = false;
 		else {
 			inventorId = super.getRequest().getPrincipal().getAccountId();
@@ -54,7 +59,7 @@ public class InventorInventionPublishService extends AbstractService<Inventor, I
 	public void validate() {
 		super.validateObject(this.invention);
 
-		if (!super.getResponse().getErrors().hasErrors("ticker")) {
+		if (this.invention != null) {
 			int partsCount = this.repository.countPartsByInventionId(this.invention.getId());
 			boolean hasParts = partsCount > 0;
 			super.getResponse().getErrors().state(super.getRequest(), hasParts, "ticker", "inventor.invention.form.error.no-parts");
