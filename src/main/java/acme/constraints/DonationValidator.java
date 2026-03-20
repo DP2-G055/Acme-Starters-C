@@ -36,10 +36,13 @@ public class DonationValidator extends AbstractValidator<ValidDonation, Donation
 			result = true;
 		else {
 			{
-				boolean currencyInEUR;
-
-				currencyInEUR = donation.getMoney().getCurrency().equals("EUR");
-				super.state(context, currencyInEUR, "money", "acme.validation.donation.currency.message");
+				if (donation.getMoney() == null)
+					result = false;
+				else {
+					boolean currencyInEUR;
+					currencyInEUR = donation.getMoney().getCurrency().equals("EUR");
+					super.state(context, currencyInEUR, "money", "acme.validation.donation.currency.message");
+				}
 			}
 
 			result = !super.hasErrors(context);
