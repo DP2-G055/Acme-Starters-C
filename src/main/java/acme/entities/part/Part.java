@@ -9,8 +9,9 @@ import javax.validation.Valid;
 import acme.client.components.basis.AbstractEntity;
 import acme.client.components.datatypes.Money;
 import acme.client.components.validation.Mandatory;
-import acme.constraints.ValidCost;
+import acme.client.components.validation.ValidMoney;
 import acme.constraints.ValidHeader;
+import acme.constraints.ValidPart;
 import acme.constraints.ValidText;
 import acme.entities.invention.Invention;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@ValidPart
 public class Part extends AbstractEntity {
 
 	private static final long	serialVersionUID	= 1L;
@@ -39,7 +41,7 @@ public class Part extends AbstractEntity {
 	private String				description;
 
 	@Mandatory
-	@ValidCost
+	@ValidMoney
 	@Column
 	private Money				cost;
 
