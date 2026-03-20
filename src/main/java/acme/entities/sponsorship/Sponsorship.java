@@ -82,10 +82,10 @@ public class Sponsorship extends AbstractEntity {
 	@Valid
 	@Transient
 	public Money totalMoney() {
-		double wrapper = this.repository.computeTotalMoney(this.getId());
+		Double wrapper = this.repository.computeTotalMoney(this.getId());
 		Money result;
 		result = new Money();
-		result.setAmount(wrapper);
+		result.setAmount(wrapper != null && wrapper > 0 ? wrapper : 0);
 		result.setCurrency("EUR");
 
 		return result;
