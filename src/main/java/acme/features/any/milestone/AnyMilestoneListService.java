@@ -1,13 +1,14 @@
 
 package acme.features.any.milestone;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.util.concurrent.AbstractService;
-
+import acme.client.components.principals.Any;
+import acme.client.services.AbstractService;
+import acme.entities.campaign.Campaign;
 import acme.entities.milestone.Milestone;
 
 @Service
@@ -16,28 +17,38 @@ public class AnyMilestoneListService extends AbstractService<Any, Milestone> {
 	@Autowired
 	private AnyMilestoneRepository	repository;
 
-	private Collection<Milestone>	milestones;
-
-	private int						campaignId;
+	private List<Milestone>			milestones;
 
 
 	@Override
 	public void authorise() {
 		boolean status;
+		int id;
+		Campaign campaignPublished;
 
-		status = super.getRequest().hasData("campaignId");
-		super.setAuthorised(status);
-	}
+		if (!super.getRequest().hasData("campaignId"))
+			status = false;
+		else {
+			id = super.getRequest().getData("campaignId", Integer.class);
 
-	@Override
-	public void load() {
-		this.campaignId = super.getRequest().getData("campaignId", int.class);
-		this.milestones = this.repository.findMilestonesByCampaignId(this.campaignId);
+			campaignPublished = this.repository.findCampaignById(id);
+
+			status = campaignPublished != null && !campaignPublished.getDraftMode();
+		}
+
+		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void unbind() {
 		super.unbindObjects(this.milestones, "title", "achievements", "effort", "kind");
-		super.unbindGlobal("campaignId", this.campaignId);
+	}
+
+	@Override
+	public void load() {
+		if (super.getRequest().hasData("campaignId")) {
+			int id = super.getRequest().getData("campaignId", int.class);
+			this.milestones = this.repository.findMilestonesByCampaignId(id);
+		}
 	}
 }

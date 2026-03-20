@@ -1,4 +1,3 @@
-package acme.features.any.campaign;
 
 package acme.features.any.campaign;
 

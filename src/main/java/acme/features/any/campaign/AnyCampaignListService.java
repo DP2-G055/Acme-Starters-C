@@ -1,4 +1,3 @@
-package acme.features.any.campaign;
 
 package acme.features.any.campaign;
 
@@ -27,7 +26,7 @@ public class AnyCampaignListService extends AbstractService<Any, Campaign> {
 
 	@Override
 	public void load() {
-		this.campaigns = this.repository.findPublishedCampaigns();
+		this.campaigns = this.repository.findAllPublishedCampaigns();
 	}
 
 	@Override

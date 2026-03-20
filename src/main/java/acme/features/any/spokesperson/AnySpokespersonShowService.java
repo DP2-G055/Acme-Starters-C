@@ -4,8 +4,8 @@ package acme.features.any.spokesperson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.util.concurrent.AbstractService;
-
+import acme.client.components.principals.Any;
+import acme.client.services.AbstractService;
 import acme.realms.Spokesperson;
 
 @Service
@@ -39,9 +39,7 @@ public class AnySpokespersonShowService extends AbstractService<Any, Spokesperso
 
 	@Override
 	public void unbind() {
-		Tuple tuple;
 
-		tuple = super.unbindObject(this.spokesperson, "cv", "achievements", "licensed");
-		tuple.put("fullName", this.spokesperson.getIdentity().getFullName());
+		super.unbindObject(this.spokesperson, "cv", "achievements", "licensed");
 	}
 }

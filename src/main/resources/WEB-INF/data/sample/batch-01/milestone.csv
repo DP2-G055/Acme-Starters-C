@@ -31,8 +31,8 @@ milestone-25,campaign-01,"Lorem ipsum dolor sit amet, consectetu",<marquee>Hacke
 milestone-26,campaign-01,"Lorem ipsum dolor sit amet, consectetu",<script>alert('Hacked!');</script>,50.00,TEASER
 milestone-27,campaign-01,"Lorem ipsum dolor sit amet, consectetu",' or 'A' = 'A,50.00,TEASER
 #effort
-milestone-28,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0.0,TEASER
-milestone-29,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0.001,TEASER
+milestone-28,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0.00,TEASER
+milestone-29,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",0.01,TEASER
 milestone-30,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",10.00,TEASER
 milestone-31,campaign-01,"Lorem ipsum dolor sit amet, consectetu","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do: eiusmod tempor incididunt ut labore et dolore magna aliqua! Ut*",100.00,TEASER
 #kind
