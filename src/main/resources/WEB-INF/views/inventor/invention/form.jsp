@@ -9,6 +9,8 @@
 	<acme:form-textbox code="inventor.invention.form.startMoment" path="startMoment"/>
 	<acme:form-textbox code="inventor.invention.form.endMoment" path="endMoment"/>
 	<acme:form-textbox code="inventor.invention.form.moreInfo" path="moreInfo"/>
+	<acme:form-textbox readonly="true" code="inventor.invention.form.cost" path="cost"/>
+	<acme:form-textbox readonly="true" code="inventor.invention.form.monthsActive" path="monthsActive"/>
 	
 	<jstl:if test="${_command != 'create'}">
 		<acme:button code="inventor.invention.form.button.parts" action="/inventor/part/list?inventionId=${id}"/>

@@ -37,9 +37,13 @@ public class InventorPartUpdateService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			this.part = this.repository.findPartById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.part = this.repository.findPartById(id);
+			}
+		} catch (Exception e) {
+			this.part = null;
 		}
 	}
 
@@ -48,7 +52,7 @@ public class InventorPartUpdateService extends AbstractService<Inventor, Part> {
 		boolean status;
 		int inventorId;
 
-		if (!super.getRequest().hasData("id"))
+		if (!super.getRequest().hasData("id", int.class))
 			status = false;
 		else {
 			inventorId = super.getRequest().getPrincipal().getAccountId();

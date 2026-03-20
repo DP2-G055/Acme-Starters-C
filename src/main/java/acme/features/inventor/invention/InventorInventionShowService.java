@@ -22,7 +22,7 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 		boolean status;
 		int inventorId;
 
-		if (!super.getRequest().hasData("id") || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class) || this.invention == null)
+		if (!super.getRequest().hasData("id", int.class) || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class) || this.invention == null)
 			status = false;
 		else if (this.invention.getDraftMode()) {
 			inventorId = super.getRequest().getPrincipal().getAccountId();
@@ -36,17 +36,25 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 
 	@Override
 	public void load() {
-		if (super.getRequest().hasData("id")) {
-			int id = super.getRequest().getData("id", int.class);
-			this.invention = this.repository.findInventionById(id);
+		try {
+			if (super.getRequest().hasData("id", int.class)) {
+				int id = super.getRequest().getData("id", int.class);
+				this.invention = this.repository.findInventionById(id);
+			}
+		} catch (Exception e) {
+			this.invention = null;
 		}
 
 	}
 
 	@Override
 	public void unbind() {
-		if (this.invention != null)
+		if (this.invention != null) {
 			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "id", "draftMode");
+			super.unbindGlobal("cost", this.invention.cost());
+			super.unbindGlobal("monthsActive", this.invention.monthsActive());
+		}
+
 	}
 
 }
