@@ -12,31 +12,18 @@ import acme.realms.Inventor;
 public class InventorInventionDeleteService extends AbstractService<Inventor, Invention> {
 
 	@Autowired
-	private InventorInventionRepository	repository;
+	private InventorInventionRepository repository;
 
-	private Invention					invention;
-
+	private Invention invention;
 
 	@Override
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
 		this.invention = this.repository.findInventionById(id);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 	}
 
 	@Override
 	public void authorise() {
-<<<<<<< Updated upstream
-		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (status)
-			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		status = status && this.invention.getDraftMode();
-		super.setAuthorised(status);
-=======
 		boolean status = false;
 
 		if (super.getRequest().hasData("id", int.class) && this.invention != null) {
@@ -47,7 +34,6 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 		}
 
 		super.getResponse().setAuthorised(status);
->>>>>>> Stashed changes
 	}
 
 	@Override
@@ -62,24 +48,17 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 
 	@Override
 	public void execute() {
-<<<<<<< Updated upstream
-=======
 		List<Part> parts = this.repository.findPartsByInventionId(this.invention.getId());
 		for (int i = 0; i < parts.size(); i++)
 			this.repository.delete(parts.get(i));
->>>>>>> Stashed changes
 		this.repository.delete(this.invention);
 	}
 
 	@Override
 	public void unbind() {
-<<<<<<< Updated upstream
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
-	}
-=======
 		if (this.invention != null)
-			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
->>>>>>> Stashed changes
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo",
+					"draftMode");
 
 	}
 }
