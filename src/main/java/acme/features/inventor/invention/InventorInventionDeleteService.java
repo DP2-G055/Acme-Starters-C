@@ -4,7 +4,6 @@ package acme.features.inventor.invention;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
 import acme.realms.Inventor;
@@ -22,16 +21,33 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
 		this.invention = this.repository.findInventionById(id);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	}
 
 	@Override
 	public void authorise() {
+<<<<<<< Updated upstream
 		boolean status;
 		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
 		if (status)
 			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
 		status = status && this.invention.getDraftMode();
 		super.setAuthorised(status);
+=======
+		boolean status = false;
+
+		if (super.getRequest().hasData("id", int.class) && this.invention != null) {
+			boolean isOwner = this.invention.getInventor().isPrincipal();
+			boolean isDraft = this.invention.getDraftMode() != null && this.invention.getDraftMode();
+
+			status = isOwner && isDraft;
+		}
+
+		super.getResponse().setAuthorised(status);
+>>>>>>> Stashed changes
 	}
 
 	@Override
@@ -46,17 +62,24 @@ public class InventorInventionDeleteService extends AbstractService<Inventor, In
 
 	@Override
 	public void execute() {
+<<<<<<< Updated upstream
+=======
+		List<Part> parts = this.repository.findPartsByInventionId(this.invention.getId());
+		for (int i = 0; i < parts.size(); i++)
+			this.repository.delete(parts.get(i));
+>>>>>>> Stashed changes
 		this.repository.delete(this.invention);
 	}
 
 	@Override
 	public void unbind() {
+<<<<<<< Updated upstream
 		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
 	}
+=======
+		if (this.invention != null)
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
+>>>>>>> Stashed changes
 
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
 	}
 }

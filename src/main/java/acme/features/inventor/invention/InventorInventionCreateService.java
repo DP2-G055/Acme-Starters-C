@@ -15,7 +15,6 @@ package acme.features.inventor.invention;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
 import acme.realms.Inventor;
@@ -45,9 +44,7 @@ public class InventorInventionCreateService extends AbstractService<Inventor, In
 
 	@Override
 	public void authorise() {
-		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		super.setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
@@ -67,13 +64,8 @@ public class InventorInventionCreateService extends AbstractService<Inventor, In
 
 	@Override
 	public void unbind() {
-		super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
-	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
+		if (this.invention != null)
+			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
 	}
 
 }

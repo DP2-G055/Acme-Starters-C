@@ -21,7 +21,20 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void authorise() {
+<<<<<<< Updated upstream
 		super.getResponse().setAuthorised(true);
+=======
+		boolean status = false;
+
+		if (super.getRequest().hasData("inventionId", int.class) && this.invention != null) {
+			boolean isOwner = this.invention.getInventor().isPrincipal();
+			boolean isDraft = this.invention.getDraftMode() != null && this.invention.getDraftMode();
+
+			status = isOwner || !isDraft;
+		}
+
+		super.getResponse().setAuthorised(status);
+>>>>>>> Stashed changes
 	}
 
 	@Override
@@ -34,6 +47,11 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 	public void load() {
 		int id = super.getRequest().getData("inventionId", int.class);
 		this.parts = this.repository.findAllPartsByInventionId(id);
+<<<<<<< Updated upstream
+=======
+		this.invention = this.repository.findInventionById(id);
+
+>>>>>>> Stashed changes
 	}
 
 }

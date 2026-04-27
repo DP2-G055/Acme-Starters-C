@@ -21,7 +21,11 @@ public class InventorInventionListService extends AbstractService<Inventor, Inve
 
 	@Override
 	public void authorise() {
+<<<<<<< Updated upstream
 		super.getResponse().setAuthorised(true);
+=======
+		super.setAuthorised(true);
+>>>>>>> Stashed changes
 	}
 
 	@Override

@@ -24,15 +24,32 @@ public class InventorPartDeleteService extends AbstractService<Inventor, Part> {
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
 		this.part = this.repository.findPartById(id);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 	}
 
 	@Override
 	public void authorise() {
+<<<<<<< Updated upstream
 		boolean status;
 		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
 		if (status)
 			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
 		super.setAuthorised(status);
+=======
+		boolean status = false;
+
+		if (super.getRequest().hasData("id", int.class) && this.part != null && this.part.getInvention() != null) {
+			boolean isOwner = this.part.getInvention().getInventor().isPrincipal();
+			boolean isDraft = this.part.getInvention().getDraftMode() != null && this.part.getInvention().getDraftMode();
+
+			status = isOwner && isDraft;
+		}
+
+		super.getResponse().setAuthorised(status);
+>>>>>>> Stashed changes
 	}
 
 	@Override

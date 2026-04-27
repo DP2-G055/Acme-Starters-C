@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
 import acme.entities.part.Part;
@@ -38,8 +37,15 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void load() {
+<<<<<<< Updated upstream
 		Invention invention;
 		int id;
+=======
+		int id = super.getRequest().getData("inventionId", int.class);
+		Invention invention = this.repository.findInventionById(id);
+		this.part = new Part();
+		this.part.setInvention(invention);
+>>>>>>> Stashed changes
 
 		id = super.getRequest().getData("inventionId", int.class);
 		invention = this.repository.findInventionById(id);
@@ -49,11 +55,27 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void authorise() {
+<<<<<<< Updated upstream
 		boolean status;
 		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
 		if (status)
 			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
 		super.setAuthorised(status);
+=======
+		boolean status = false;
+
+		if (this.part != null && this.part.getInvention() != null) {
+			Invention invention = this.part.getInvention();
+
+			boolean isOwner = invention.getInventor().isPrincipal();
+
+			boolean isDraft = invention.getDraftMode() != null && invention.getDraftMode();
+
+			status = isOwner && isDraft;
+		}
+
+		super.getResponse().setAuthorised(status);
+>>>>>>> Stashed changes
 	}
 
 	@Override
@@ -78,12 +100,6 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 		super.unbindGlobal("draftMode", this.part.getInvention().getDraftMode());
 		super.unbindGlobal("inventionId", this.part.getInvention().getId());
 		super.unbindGlobal("kindOptions", kindChoices);
-	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
 	}
 
 }

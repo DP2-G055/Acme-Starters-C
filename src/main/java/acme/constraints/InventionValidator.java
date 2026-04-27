@@ -33,8 +33,13 @@ public class InventionValidator extends AbstractValidator<ValidInvention, Invent
 		if (invention == null)
 			result = true;
 		else {
+<<<<<<< Updated upstream
 			{
 				boolean uniqueInvention;
+=======
+			{// !super.hasErrors(context, "ticker") &&
+				boolean uniqueInvention = true;
+>>>>>>> Stashed changes
 				Invention existingInvention;
 
 				existingInvention = this.repository.findInventionByTicker(invention.getTicker());
