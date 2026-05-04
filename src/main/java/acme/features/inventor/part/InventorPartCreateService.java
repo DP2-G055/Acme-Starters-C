@@ -1,14 +1,3 @@
-/*
- * InventorPartUpdateService.java
- *
- * Copyright (C) 2012-2026 Rafael Corchuelo.
- *
- * In keeping with the traditional purpose of furthering education and research, it is
- * the policy of the copyright owner to permit non-commercial use and redistribution of
- * this software. It has been tested carefully, but it is not guaranteed for any particular
- * purposes. The copyright owner does not offer any warranties or representations, nor do
- * they accept any liabilities with respect to them.
- */
 
 package acme.features.inventor.part;
 
@@ -32,50 +21,30 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 
 	private Part					part;
 
-	// AbstractService interface ----------------------------------------------ç
+	// AbstractService interface ----------------------------------------------
 
 
 	@Override
 	public void load() {
-<<<<<<< Updated upstream
-		Invention invention;
-		int id;
-=======
 		int id = super.getRequest().getData("inventionId", int.class);
 		Invention invention = this.repository.findInventionById(id);
-		this.part = new Part();
-		this.part.setInvention(invention);
->>>>>>> Stashed changes
-
-		id = super.getRequest().getData("inventionId", int.class);
-		invention = this.repository.findInventionById(id);
 		this.part = new Part();
 		this.part.setInvention(invention);
 	}
 
 	@Override
 	public void authorise() {
-<<<<<<< Updated upstream
-		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (status)
-			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		super.setAuthorised(status);
-=======
 		boolean status = false;
 
 		if (this.part != null && this.part.getInvention() != null) {
 			Invention invention = this.part.getInvention();
-
 			boolean isOwner = invention.getInventor().isPrincipal();
-
 			boolean isDraft = invention.getDraftMode() != null && invention.getDraftMode();
 
 			status = isOwner && isDraft;
 		}
 
 		super.getResponse().setAuthorised(status);
->>>>>>> Stashed changes
 	}
 
 	@Override

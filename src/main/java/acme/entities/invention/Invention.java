@@ -84,14 +84,14 @@ public class Invention extends AbstractEntity {
 
 	@Valid
 	@Transient
-	private Double monthsActive() {
+	public Double monthsActive() {
 		Duration duracion = MomentHelper.computeDuration(this.startMoment, this.endMoment);
 		return (double) 0.0;
 	}
 
 	@Valid
 	@Transient
-	private Money cost() {
+	public Money cost() {
 		Double sum = this.repository.findMoneyByInventionId(this.getId());
 		Money res = new Money();
 		res.setAmount(sum > 0 ? sum : 0);

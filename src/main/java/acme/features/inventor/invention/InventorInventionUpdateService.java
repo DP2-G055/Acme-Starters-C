@@ -36,24 +36,10 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
 		this.invention = this.repository.findInventionById(id);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 	}
 
 	@Override
 	public void authorise() {
-<<<<<<< Updated upstream
-		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-
-		if (status)
-			status = this.invention.getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
-		status = status && this.invention.getDraftMode();
-
-		super.setAuthorised(status);
-=======
 		boolean status = false;
 
 		if (super.getRequest().hasData("id", int.class) && this.invention != null) {
@@ -64,7 +50,6 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 		}
 
 		super.getResponse().setAuthorised(status);
->>>>>>> Stashed changes
 	}
 
 	@Override

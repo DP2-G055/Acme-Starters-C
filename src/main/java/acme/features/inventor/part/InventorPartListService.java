@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.client.services.AbstractService;
+import acme.entities.invention.Invention;
 import acme.entities.part.Part;
 import acme.realms.Inventor;
 
@@ -17,13 +18,11 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 	private InventorPartRepository	repository;
 
 	private List<Part>				parts;
+	private Invention				invention;
 
 
 	@Override
 	public void authorise() {
-<<<<<<< Updated upstream
-		super.getResponse().setAuthorised(true);
-=======
 		boolean status = false;
 
 		if (super.getRequest().hasData("inventionId", int.class) && this.invention != null) {
@@ -34,7 +33,6 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 		}
 
 		super.getResponse().setAuthorised(status);
->>>>>>> Stashed changes
 	}
 
 	@Override
@@ -47,11 +45,7 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 	public void load() {
 		int id = super.getRequest().getData("inventionId", int.class);
 		this.parts = this.repository.findAllPartsByInventionId(id);
-<<<<<<< Updated upstream
-=======
 		this.invention = this.repository.findInventionById(id);
-
->>>>>>> Stashed changes
 	}
 
 }

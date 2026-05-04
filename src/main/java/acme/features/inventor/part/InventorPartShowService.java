@@ -21,9 +21,6 @@ public class InventorPartShowService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void authorise() {
-<<<<<<< Updated upstream
-		super.getResponse().setAuthorised(true);
-=======
 		boolean status = false;
 
 		if (super.getRequest().hasData("id", int.class) && this.part != null && this.part.getInvention() != null) {
@@ -34,17 +31,12 @@ public class InventorPartShowService extends AbstractService<Inventor, Part> {
 		}
 
 		super.getResponse().setAuthorised(status);
->>>>>>> Stashed changes
 	}
 
 	@Override
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
 		this.part = this.repository.findPartById(id);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 	}
 
 	@Override

@@ -19,9 +19,6 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 
 	@Override
 	public void authorise() {
-<<<<<<< Updated upstream
-		super.getResponse().setAuthorised(true);
-=======
 		boolean status = false;
 
 		if (super.getRequest().hasData("id", int.class) && this.invention != null) {
@@ -32,17 +29,12 @@ public class InventorInventionShowService extends AbstractService<Inventor, Inve
 		}
 
 		super.getResponse().setAuthorised(status);
->>>>>>> Stashed changes
 	}
 
 	@Override
 	public void load() {
 		int id = super.getRequest().getData("id", int.class);
 		this.invention = this.repository.findInventionById(id);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 	}
 
 	@Override
