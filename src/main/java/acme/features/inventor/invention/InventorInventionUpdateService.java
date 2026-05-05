@@ -15,7 +15,7 @@ package acme.features.inventor.invention;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.client.helpers.PrincipalHelper;
+import acme.client.components.models.Tuple;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
 import acme.realms.Inventor;
@@ -35,31 +35,17 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 
 	@Override
 	public void load() {
-		try {
-			if (super.getRequest().hasData("id", int.class)) {
-				int id = super.getRequest().getData("id", int.class);
-				this.invention = this.repository.findInventionById(id);
-			}
-		} catch (Exception e) {
-			this.invention = null;
-		}
+		int id = super.getRequest().getData("id", int.class);
+		this.invention = this.repository.findInventionById(id);
 
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-		int inventorId;
+		status = this.invention != null && this.invention.getInventor().isPrincipal() && this.invention.getDraftMode();
 
-		if (!super.getRequest().hasData("id", int.class))
-			status = false;
-		else {
-			inventorId = super.getRequest().getPrincipal().getAccountId();
-
-			status = this.invention != null && this.invention.getInventor().getUserAccount().getId() == inventorId && this.invention.getDraftMode();
-		}
-
-		super.getResponse().setAuthorised(status);
+		super.setAuthorised(status);
 	}
 
 	@Override
@@ -79,14 +65,10 @@ public class InventorInventionUpdateService extends AbstractService<Inventor, In
 
 	@Override
 	public void unbind() {
-		if (this.invention != null)
-			super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo", "draftMode");
-	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
+		Tuple tuple = super.unbindObject(this.invention, "ticker", "name", "description", "startMoment", "endMoment", "moreInfo");
+		tuple.put("draftMode", this.invention.getDraftMode());
+		tuple.put("cost", this.invention.getCost());
+		tuple.put("monthsActive", this.invention.getMonthsActive());
 	}
 
 }

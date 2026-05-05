@@ -85,13 +85,13 @@ public class Invention extends AbstractEntity {
 
 	@Valid
 	@Transient
-	public Double monthsActive() {
+	public Double getMonthsActive() {
 		if (this.getStartMoment() != null && this.getEndMoment() != null) {
 			Double months = MomentHelper.computeDifference(this.startMoment, this.endMoment, ChronoUnit.MONTHS);
 			if (months < 0)
 				return 0.0;
 			else
-				return MathHelper.roundOff(months, 0);
+				return MathHelper.roundOff(months, 1);
 
 		} else
 			return 0.0;
@@ -99,7 +99,7 @@ public class Invention extends AbstractEntity {
 
 	@Valid
 	@Transient
-	public Money cost() {
+	public Money getCost() {
 		Double sum = this.repository.findMoneyByInventionId(this.getId());
 		Money res = new Money();
 		res.setAmount(sum != null && sum > 0 ? sum : 0);

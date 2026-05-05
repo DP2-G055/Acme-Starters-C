@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.client.components.views.SelectChoices;
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.entities.invention.Invention;
 import acme.entities.part.Part;
@@ -38,29 +37,17 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 
 	@Override
 	public void load() {
-		Invention invention;
-		int id;
-		try {
-			if (super.getRequest().hasData("inventionId", int.class)) {
-				id = super.getRequest().getData("inventionId", int.class);
-				invention = this.repository.findInventionById(id);
-				this.part = new Part();
-				this.part.setInvention(invention);
-			}
-		} catch (Exception e) {
-			this.part = null;
-		}
+		int id = super.getRequest().getData("inventionId", int.class);
+		Invention invention = this.repository.findInventionById(id);
+		this.part = super.newObject(Part.class);
+		this.part.setInvention(invention);
 
 	}
 
 	@Override
 	public void authorise() {
 		boolean status;
-		status = super.getRequest().getPrincipal().hasRealmOfType(Inventor.class);
-		if (!super.getRequest().hasData("inventionId", int.class))
-			status = false;
-		else if (status)
-			status = this.part.getInvention().getInventor().getUserAccount().getId() == super.getRequest().getPrincipal().getAccountId();
+		status = this.part.getInvention() != null && this.part.getInvention().getInventor().isPrincipal() && this.part.getInvention().getDraftMode();
 		super.setAuthorised(status);
 	}
 
@@ -88,12 +75,6 @@ public class InventorPartCreateService extends AbstractService<Inventor, Part> {
 			super.unbindGlobal("inventionId", this.part.getInvention().getId());
 			super.unbindGlobal("kindOptions", kindChoices);
 		}
-	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
 	}
 
 }

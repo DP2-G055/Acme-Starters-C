@@ -23,50 +23,27 @@ public class InventorPartListService extends AbstractService<Inventor, Part> {
 
 
 	@Override
+	public void load() {
+		int inventionId = super.getRequest().getData("inventionId", int.class);
+		this.parts = this.repository.findAllPartsByInventionId(inventionId);
+		this.invention = this.repository.findInventionById(inventionId);
+
+	}
+
+	@Override
 	public void authorise() {
 		boolean status;
-		int inventionId;
-		int inventorId;
-		Invention inventionPublished;
 
-		if (!super.getRequest().hasData("inventionId", int.class) || !super.getRequest().getPrincipal().hasRealmOfType(Inventor.class))
-			status = false;
-		else if (this.parts.size() == 0 || this.parts.get(0).getInvention().getDraftMode()) {
-			inventionId = super.getRequest().getData("inventionId", Integer.class);
+		status = this.parts != null && (!this.invention.getDraftMode() || this.invention.getInventor().isPrincipal());
 
-			inventionPublished = this.repository.findInventionById(inventionId);
-
-			inventorId = super.getRequest().getPrincipal().getAccountId();
-
-			status = inventionPublished != null && inventionPublished.getInventor().getUserAccount().getId() == inventorId;
-		} else
-			status = true;
-
-		super.getResponse().setAuthorised(status);
+		super.setAuthorised(status);
 	}
 
 	@Override
 	public void unbind() {
-		if (this.parts != null && super.getRequest().hasData("inventionId", int.class)) {
-			super.unbindObjects(this.parts, "name", "description", "cost");
-			super.unbindGlobal("id", super.getRequest().getData("inventionId", int.class));
-			super.unbindGlobal("draftMode", this.invention.getDraftMode());
-
-		}
-	}
-
-	@Override
-	public void load() {
-		try {
-			if (super.getRequest().hasData("inventionId", int.class)) {
-				int id = super.getRequest().getData("inventionId", int.class);
-				this.parts = this.repository.findAllPartsByInventionId(id);
-				this.invention = this.repository.findInventionById(id);
-			}
-		} catch (Exception e) {
-			this.parts = null;
-			this.invention = null;
-		}
+		super.unbindObjects(this.parts, "name", "description", "cost");
+		super.unbindGlobal("inventionId", this.invention.getId());
+		super.unbindGlobal("draftMode", this.invention.getDraftMode());
 
 	}
 
