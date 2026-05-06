@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import acme.client.components.principals.Authenticated;
 import acme.client.components.principals.UserAccount;
-import acme.client.helpers.PrincipalHelper;
 import acme.client.services.AbstractService;
 import acme.realms.Inventor;
 
@@ -73,11 +72,4 @@ public class AuthenticatedInventorCreateService extends AbstractService<Authenti
 	public void unbind() {
 		super.unbindObject(this.inventor, "bio", "keyWords", "licensed");
 	}
-
-	@Override
-	public void onSuccess() {
-		if (super.getRequest().getMethod().equals("POST"))
-			PrincipalHelper.handleUpdate();
-	}
-
 }
