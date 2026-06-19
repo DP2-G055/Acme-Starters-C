@@ -19,42 +19,29 @@ public class AnyPartListService extends AbstractService<Any, Part> {
 
 	private List<Part>			parts;
 
+	private Invention			invention;
+
 
 	@Override
 	public void authorise() {
 		boolean status;
-		int id;
-		Invention inventionPublished;
 
-		if (!super.getRequest().hasData("inventionId", int.class))
-			status = false;
-		else {
-			id = super.getRequest().getData("inventionId", Integer.class);
+		status = this.parts != null && this.invention != null && !this.invention.getDraftMode();
 
-			inventionPublished = this.repository.findInventionById(id);
+		super.setAuthorised(status);
 
-			status = inventionPublished != null && !inventionPublished.getDraftMode();
-		}
-
-		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void unbind() {
-		if (this.parts != null)
-			super.unbindObjects(this.parts, "name", "description", "cost");
+		super.unbindObjects(this.parts, "name", "description", "cost");
 	}
 
 	@Override
 	public void load() {
-		try {
-			if (super.getRequest().hasData("inventionId", int.class)) {
-				int id = super.getRequest().getData("inventionId", int.class);
-				this.parts = this.repository.findAllPartsByInventionId(id);
-			}
-		} catch (Exception e) {
-			this.parts = null;
-		}
+		int id = super.getRequest().getData("inventionId", int.class);
+		this.invention = this.repository.findInventionById(id);
+		this.parts = this.repository.findAllPartsByInventionId(id);
 
 	}
 

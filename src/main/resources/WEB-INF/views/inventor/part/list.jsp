@@ -9,5 +9,5 @@
 	<acme:list-column code="inventor.part.list.description" path="description" width="60%"/>
 </acme:list>
 <jstl:if test="${draftMode}">
-	<acme:button code="inventor.part.list.button.create" action="/inventor/part/create?inventionId=${id}"/>
+	<acme:button code="inventor.part.list.button.create" action="/inventor/part/create?inventionId=${inventionId}"/>
 </jstl:if>

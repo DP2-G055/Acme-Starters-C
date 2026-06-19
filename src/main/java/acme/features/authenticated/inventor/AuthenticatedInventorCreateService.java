@@ -79,5 +79,4 @@ public class AuthenticatedInventorCreateService extends AbstractService<Authenti
 		if (super.getRequest().getMethod().equals("POST"))
 			PrincipalHelper.handleUpdate();
 	}
-
 }

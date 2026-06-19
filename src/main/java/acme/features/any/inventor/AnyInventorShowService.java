@@ -26,7 +26,7 @@ public class AnyInventorShowService extends AbstractService<Any, Inventor> {
 		else
 			status = this.inventor != null;
 
-		super.getResponse().setAuthorised(status);
+		super.setAuthorised(status);
 	}
 
 	@Override
